@@ -171,10 +171,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         cv::Point2f q[4];
         cv::Point2f e[4];
         
-        e[0] = Point2f(0,0);
-        e[1] = Point2f(100,0);
-        e[2] = Point2f(100,100);
-        e[3] = Point2f(0,100);
+        float m = 100;//pixel offset
+        float k = 1; //size multiplier
+        
+        e[0] = Point2f((0*k)+m,(0*k)+m);
+        e[1] = Point2f((100*k)+m,(0*k)+m);
+        e[2] = Point2f((100*k)+m,(100*k)+m);
+        e[3] = Point2f((0*k)+m,(100*k)+m);
         
         p[0] = Point2f(corners[0].x,corners[0].y);
         p[1] = Point2f(corners[2].x,corners[2].y);
