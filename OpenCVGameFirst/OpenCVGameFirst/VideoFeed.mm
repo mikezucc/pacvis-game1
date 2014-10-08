@@ -169,32 +169,44 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         cv::Point2f p[4];
         cv::Point2f q[4];
+        cv::Point2f e[4];
         
-        q[0].x = (float) 0;
-        q[0].y = (float) 0;
-        q[1].x = (float) image.size().width;
-        q[1].y = (float) 0;
+        e[0] = Point2f(0,0);
+        e[1] = Point2f(100,0);
+        e[2] = Point2f(100,100);
+        e[3] = Point2f(0,100);
         
-        q[2].x  = (float) image.size().width;
-        q[2].y = (float) image.size().height;
-        q[3].x = (float) 0;
-        q[3].y = (float) image.size().height;
+        p[0] = Point2f(corners[0].x,corners[0].y);
+        p[1] = Point2f(corners[2].x,corners[2].y);
+        p[2] = Point2f(corners[8].x,corners[8].y);
+        p[3] = Point2f(corners[6].x,corners[6].y);
         
-        p[0].x = corners[0].x;
-        p[0].y = corners[0].y;
-        p[1].x = corners[2].x;
-        p[1].y = corners[2].y;
+        //cv::Point2f simOrigin;
+        //simOrigin = Point2f(corners[4].x,corners[4].y);
         
-        p[2].x = corners[6].x;
-        p[2].y = corners[6].y;
-        p[3].x = corners[8].x;
-        p[3].y = corners[8].y;
         
-        //cv::getPerspectiveTransform(q,p,warp_matrix);
+        //find cross product
+        //first use get v1 and v2
+        cv::Point2f v1 = Point2f(p[1].x-p[0].x,p[1].y-p[0].y);
+        cv::Point2f v2 = Point2f(p[2].x-p[0].x,p[2].y-p[0].y);
+        
+        cv::Point2f orthZ;
+        orthZ = Point2f(v1.x * v2.y, v1.y * v2.x);
+        //NSLog(@"\nv1: %f\nv1: %f",v1.x,v1.y);
+        //Mat lambda( 2, 4, CV_32FC4 );
+        //lambda = Mat::zeros( image.rows, image.cols, CV_32FC4);
+        warp_matrix = cv::getPerspectiveTransform(p,e);
+        NSLog(@"orthZ points are %f, %f",e[1].x,e[1].y);
         int thickness = 2;
         int lineType = 8;
-        line( image, p[0], p[1], Scalar( 0, 255, 0 ), thickness );
-        line( image, p[0], p[2], Scalar( 255, 0, 0 ), thickness );
+        
+        cv::warpPerspective(image, image, warp_matrix, _imageSize);
+        
+        line( image, p[0], p[1], Scalar( 255, 255, 0 ), thickness );
+        line( image, p[0], p[3], Scalar( 255, 0, 0 ), thickness );
+        line( image, p[1], p[2], Scalar( 0, 255, 0 ), thickness );
+        line( image, p[2], p[3], Scalar( 0, 255, 255 ), thickness );
+        //line( image, e[0], e[0], Scalar( 0, 0, 255), thickness );
     }
     
     //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);
