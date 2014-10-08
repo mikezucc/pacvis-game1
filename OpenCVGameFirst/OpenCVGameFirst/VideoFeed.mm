@@ -11,6 +11,11 @@ using namespace cv;
 
 cv::Mat *gray_image;
 
+struct CvPoint2D32f {
+    double x;
+    double y;
+};
+
 @interface VideoFeed () <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @end
@@ -154,12 +159,42 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     bool found = cv::findChessboardCorners(image, boardSize, corners);
     
     //unnecessary calculation, since image is already converted to gray scale
-    cv::cvtColor(image, *gray_image, COLOR_BGRA2GRAY);
+    cv::Mat warp_matrix(3,3,CV_32FC4);
+    //cv::cvtColor(image, *gray_image, COLOR_BGRA2GRAY);
     if (found) {
         // improves accuracy to attempted subpixel (increases memory 10x)
         //cv::cornerSubPix(*gray_image, corners, cv::Size(11, 11), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
         
-        cv::drawChessboardCorners(image, boardSize, corners, found);
+        //cv::drawChessboardCorners(image, boardSize, corners, found);
+        
+        cv::Point2f p[4];
+        cv::Point2f q[4];
+        
+        q[0].x = (float) 0;
+        q[0].y = (float) 0;
+        q[1].x = (float) image.size().width;
+        q[1].y = (float) 0;
+        
+        q[2].x  = (float) image.size().width;
+        q[2].y = (float) image.size().height;
+        q[3].x = (float) 0;
+        q[3].y = (float) image.size().height;
+        
+        p[0].x = corners[0].x;
+        p[0].y = corners[0].y;
+        p[1].x = corners[2].x;
+        p[1].y = corners[2].y;
+        
+        p[2].x = corners[6].x;
+        p[2].y = corners[6].y;
+        p[3].x = corners[8].x;
+        p[3].y = corners[8].y;
+        
+        //cv::getPerspectiveTransform(q,p,warp_matrix);
+        int thickness = 2;
+        int lineType = 8;
+        line( image, p[0], p[1], Scalar( 0, 255, 0 ), thickness );
+        line( image, p[0], p[2], Scalar( 255, 0, 0 ), thickness );
     }
     
     //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);

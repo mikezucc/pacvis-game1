@@ -13,7 +13,6 @@
 		0E71692A19E486B0000AD0A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E71692919E486B0000AD0A4 /* Images.xcassets */; };
 		0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E71692B19E486B0000AD0A4 /* LaunchScreen.xib */; };
 		0E71693919E486B1000AD0A4 /* OpenCVGameFirstTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71693819E486B1000AD0A4 /* OpenCVGameFirstTests.m */; };
-		0E71694319E487A0000AD0A4 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694219E487A0000AD0A4 /* opencv2.framework */; };
 		0E71694719E487C5000AD0A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694419E487C5000AD0A4 /* CoreGraphics.framework */; };
 		0E71694819E487C5000AD0A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694519E487C5000AD0A4 /* Foundation.framework */; };
 		0E71694919E487C5000AD0A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694619E487C5000AD0A4 /* UIKit.framework */; };
@@ -24,6 +23,7 @@
 		0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695B19E495B6000AD0A4 /* CoreImage.framework */; };
 		0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695C19E495B6000AD0A4 /* CoreMedia.framework */; };
 		0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695D19E495B6000AD0A4 /* CoreVideo.framework */; };
+		0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E80822019E51C9500F83683 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,6 @@
 		0E71693219E486B0000AD0A4 /* OpenCVGameFirstTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenCVGameFirstTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E71693719E486B1000AD0A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E71693819E486B1000AD0A4 /* OpenCVGameFirstTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenCVGameFirstTests.m; sourceTree = "<group>"; };
-		0E71694219E487A0000AD0A4 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../../../Downloads/opencv2.framework; sourceTree = "<group>"; };
 		0E71694419E487C5000AD0A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0E71694519E487C5000AD0A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E71694619E487C5000AD0A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -64,6 +63,7 @@
 		0E71695B19E495B6000AD0A4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		0E71695C19E495B6000AD0A4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0E71695D19E495B6000AD0A4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		0E80822019E51C9500F83683 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +74,12 @@
 				0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */,
 				0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */,
 				0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */,
+				0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */,
 				0E71695919E49589000AD0A4 /* AVFoundation.framework in Frameworks */,
 				0E71695A19E49589000AD0A4 /* AVKit.framework in Frameworks */,
 				0E71694719E487C5000AD0A4 /* CoreGraphics.framework in Frameworks */,
 				0E71694819E487C5000AD0A4 /* Foundation.framework in Frameworks */,
 				0E71694919E487C5000AD0A4 /* UIKit.framework in Frameworks */,
-				0E71694319E487A0000AD0A4 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +96,7 @@
 		0E71691019E486B0000AD0A4 = {
 			isa = PBXGroup;
 			children = (
+				0E80822019E51C9500F83683 /* opencv2.framework */,
 				0E71695B19E495B6000AD0A4 /* CoreImage.framework */,
 				0E71695C19E495B6000AD0A4 /* CoreMedia.framework */,
 				0E71695D19E495B6000AD0A4 /* CoreVideo.framework */,
@@ -126,7 +127,6 @@
 				0E71692019E486B0000AD0A4 /* AppDelegate.h */,
 				0E71692119E486B0000AD0A4 /* AppDelegate.m */,
 				0E71695319E48B39000AD0A4 /* just camera things */,
-				0E71694219E487A0000AD0A4 /* opencv2.framework */,
 				0E71692619E486B0000AD0A4 /* Main.storyboard */,
 				0E71692919E486B0000AD0A4 /* Images.xcassets */,
 				0E71692B19E486B0000AD0A4 /* LaunchScreen.xib */,
@@ -402,6 +402,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
+					/Users/mikezucc/Documents/iosclass,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -416,6 +417,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
+					/Users/mikezucc/Documents/iosclass,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -476,6 +478,7 @@
 				0E71693E19E486B1000AD0A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E71693F19E486B1000AD0A4 /* Build configuration list for PBXNativeTarget "OpenCVGameFirstTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +487,7 @@
 				0E71694119E486B1000AD0A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
