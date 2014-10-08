@@ -11,12 +11,26 @@
 
 #import "VideoFrame.h"
 
+#import <opencv2/videoio/cap_ios.h>
+#import <opencv2/opencv.hpp>
+#import "opencv2/core.hpp"
+#import "opencv2/imgproc.hpp"
+#import "opencv2/photo.hpp"
+#import "opencv2/video.hpp"
+#import "opencv2/features2d.hpp"
+#import "opencv2/objdetect.hpp"
+#import "opencv2/calib3d.hpp"
+#import "opencv2/imgcodecs.hpp"
+#import "opencv2/videoio.hpp"
+#import "opencv2/highgui.hpp"
+#import "opencv2/ml.hpp"
+
 #pragma mark -
 #pragma mark VideoSource Delegate
 @protocol VideoSourceDelegate <NSObject>
 
 @required
-- (void)frameReady:(struct VideoFrame)frame;
+- (void)frameReady:(const cv::Mat &)frame;
 
 @end
 

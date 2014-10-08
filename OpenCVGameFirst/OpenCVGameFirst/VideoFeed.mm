@@ -7,6 +7,9 @@
 //
 
 #import "VideoFeed.h"
+using namespace cv;
+
+cv::Mat *gray_image;
 
 @interface VideoFeed () <AVCaptureVideoDataOutputSampleBufferDelegate>
 
@@ -20,6 +23,7 @@
 - (id)init {
     self = [super init];
     if ( self ) {
+        gray_image = new cv::Mat(480, 640, CV_8UC1);
         AVCaptureSession * captureSession = [[AVCaptureSession alloc] init];
         if ( [captureSession canSetSessionPreset:AVCaptureSessionPreset640x480] ) {
             [captureSession setSessionPreset:AVCaptureSessionPreset640x480];
@@ -126,13 +130,38 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     size_t stride = CVPixelBufferGetBytesPerRow(imageBuffer);
-    struct VideoFrame frame = {width, height, stride, baseAddress};
+    //struct VideoFrame frame = {width, height, stride, baseAddress};
+    cv::Mat image = cv::Mat((int)height,(int)width,CV_8UC4,baseAddress);
     
     // (4) Dispatch VideoFrame to VideoSource delegate
-    [self.delegate frameReady:frame];
+    
+    [self processImage:image];
+    
+    [self.delegate frameReady:image];
     
     // (5) Unlock pixel buffer
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 }
+
+#ifdef __cplusplus
+-(void)processImage:(cv::Mat &)image
+{
+    std::vector<cv::Point2f> corners;
+    cv::Size _imageSize(image.size().width, image.size().height);
+    cv::Size boardSize(3,3);
+    bool found = cv::findChessboardCorners(image, boardSize, corners);
+    
+    //unnecessary calculation, since image is already converted to gray scale
+    cv::cvtColor(image, *gray_image, COLOR_BGRA2GRAY);
+    if (found) {
+        // improves accuracy to attempted subpixel (increases memory 10x)
+        //cv::cornerSubPix(*gray_image, corners, cv::Size(11, 11), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
+        
+        cv::drawChessboardCorners(image, boardSize, corners, found);
+    }
+    
+    //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);
+}
+#endif
 
 @end
