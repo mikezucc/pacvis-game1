@@ -49,6 +49,8 @@ cv::Mat *gray_image;
 - (BOOL)startWithDevicePosition:(AVCaptureDevicePosition)devicePosition {
     // (1) Find camera device at the specific position
     AVCaptureDevice * videoDevice = [self cameraWithPosition:devicePosition];
+    [videoDevice lockForConfiguration:nil];
+    videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, 20);
     if ( !videoDevice ) {
         NSLog(@"Could not initialize camera at position %d", devicePosition);
         return FALSE;
