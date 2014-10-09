@@ -9,7 +9,7 @@
 #import "VideoFeed.h"
 using namespace cv;
 
-cv::Mat *gray_image;
+cv::Mat fuckfaceMat;
 
 struct CvPoint2D32f {
     double x;
@@ -23,12 +23,14 @@ struct CvPoint2D32f {
 
 @implementation VideoFeed
 
+@synthesize doge;
+
 #pragma mark -
 #pragma mark Object Lifecycle
 - (id)init {
     self = [super init];
     if ( self ) {
-        gray_image = new cv::Mat(480, 640, CV_8UC1);
+        //gray_image = new cv::Mat(480, 640, CV_8UC1);
         AVCaptureSession * captureSession = [[AVCaptureSession alloc] init];
         if ( [captureSession canSetSessionPreset:AVCaptureSessionPreset640x480] ) {
             [captureSession setSessionPreset:AVCaptureSessionPreset640x480];
@@ -37,6 +39,10 @@ struct CvPoint2D32f {
             NSLog(@"Could not configure AVCaptureSession video input");
         }
         _captureSession = captureSession;
+        doge = [UIImage imageNamed:@"fuckface.jpg"];
+        NSLog(@"fuckface is %@",doge);
+        fuckfaceMat = [self toCVMatFromRGB:doge];
+        NSLog(@"post mat conversion");
     }
     return self;
 }
@@ -158,8 +164,10 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     cv::Size boardSize(3,3);
     bool found = cv::findChessboardCorners(image, boardSize, corners);
     
+    cv::Size ffaceSize(fuckfaceMat.size().width, fuckfaceMat.size().height);
+    
     //unnecessary calculation, since image is already converted to gray scale
-    cv::Mat warp_matrix(3,3,CV_32FC4);
+    cv::Mat warp_matrix(3,3,CV_32FC3);
     //cv::cvtColor(image, *gray_image, COLOR_BGRA2GRAY);
     if (found) {
         // improves accuracy to attempted subpixel (increases memory 10x)
@@ -199,21 +207,62 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //Mat lambda( 2, 4, CV_32FC4 );
         //lambda = Mat::zeros( image.rows, image.cols, CV_32FC4);
         warp_matrix = cv::getPerspectiveTransform(p,e);
-        NSLog(@"orthZ points are %f, %f",e[1].x,e[1].y);
+        //NSLog(@"orthZ points are %f, %f",e[1].x,e[1].y);
         int thickness = 2;
         int lineType = 8;
         
-        cv::warpPerspective(image, image, warp_matrix, _imageSize);
+        cv::Mat ffaceCopy;
+        fuckfaceMat.copyTo(ffaceCopy);
+        cv::warpPerspective(fuckfaceMat, ffaceCopy, warp_matrix, ffaceSize);
+       // cv::getaf
         
         line( image, p[0], p[1], Scalar( 255, 255, 0 ), thickness );
         line( image, p[0], p[3], Scalar( 255, 0, 0 ), thickness );
         line( image, p[1], p[2], Scalar( 0, 255, 0 ), thickness );
         line( image, p[2], p[3], Scalar( 0, 255, 255 ), thickness );
         //line( image, e[0], e[0], Scalar( 0, 0, 255), thickness );
+        
+        //place the dog over
+        //cv::Size ffaceSize(ffaceCopy.size().width, ffaceCopy.size().height);
+        NSLog(@"ffacesizeb4 run are %d, %d", ffaceSize.height, ffaceSize.width);
+        //cv::Rect roi( p[0], ffaceSize);
+        //cv::Mat destinationROI = image( roi );
+        //fuckfaceMat.copyTo( destinationROI );
+        
+       // cv::solvePnP(<#InputArray objectPoints#>, <#InputArray imagePoints#>, <#InputArray cameraMatrix#>, <#InputArray distCoeffs#>, <#OutputArray rvec#>, <#OutputArray tvec#>);
+        
     }
     
     //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);
 }
 #endif
 
+#ifdef __cplusplus
+- (cv::Mat)toCVMatFromRGB:(UIImage*)image
+{
+    // (1) Get image dimensions
+    CGFloat cols = image.size.width;
+    CGFloat rows = image.size.height;
+    NSLog(@"imageDims are %f x %f",cols, rows);
+    
+    // (2) Create OpenCV image container, 8 bits per component, 4 channels
+    cv::Mat cvMat(rows, cols, CV_8UC3);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    // (3) Create CG context and draw the image
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+                                                    cols,
+                                                    rows,
+                                                    CGImageGetBitsPerComponent(image.CGImage),
+                                                    764,
+                                                    rgbColorSpace,
+                                                    CGImageGetBitmapInfo(image.CGImage));
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(contextRef);
+    
+    // (4) Return OpenCV image container reference
+    return cvMat;
+}
+#endif
 @end

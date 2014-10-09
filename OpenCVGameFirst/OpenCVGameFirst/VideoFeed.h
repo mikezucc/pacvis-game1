@@ -46,4 +46,6 @@
 
 - (BOOL)startWithDevicePosition:(AVCaptureDevicePosition)devicePosition;
 
+@property (nonatomic, strong) UIImage *doge;
+
 @end
