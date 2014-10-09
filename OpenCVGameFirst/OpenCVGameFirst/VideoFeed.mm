@@ -39,9 +39,9 @@ struct CvPoint2D32f {
             NSLog(@"Could not configure AVCaptureSession video input");
         }
         _captureSession = captureSession;
-        doge = [UIImage imageNamed:@"fuckface.jpg"];
-        NSLog(@"fuckface is %@",doge);
-        fuckfaceMat = [self toCVMatFromRGB:doge];
+        //doge = [UIImage imageNamed:@"fuckface.jpg"];
+        //NSLog(@"fuckface is %@",doge);
+        //fuckfaceMat = [self toCVMatFromRGB:doge];
         NSLog(@"post mat conversion");
     }
     return self;
@@ -211,9 +211,9 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         int thickness = 2;
         int lineType = 8;
         
-        cv::Mat ffaceCopy;
-        fuckfaceMat.copyTo(ffaceCopy);
-        cv::warpPerspective(fuckfaceMat, ffaceCopy, warp_matrix, ffaceSize);
+        //cv::Mat ffaceCopy;
+        //fuckfaceMat.copyTo(ffaceCopy);
+        //cv::warpPerspective(image, image, warp_matrix, ffaceSize);
        // cv::getaf
         
         line( image, p[0], p[1], Scalar( 255, 255, 0 ), thickness );

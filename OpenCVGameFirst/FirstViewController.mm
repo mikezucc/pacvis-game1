@@ -14,6 +14,8 @@
 
 @implementation FirstViewController
 
+@synthesize closeThisView;
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,6 +25,16 @@
     
     self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 480, 640)];
     [self.view addSubview:self.backgroundImageView];
+    
+    closeThisView = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 40, 40)];
+    [closeThisView setTitle:@"close me" forState:UIControlStateNormal];
+    [closeThisView addTarget:self action:@selector(closeMe)forControlEvents:UIControlStateNormal];
+    [self.view addSubview:closeThisView];
+}
+
+-(IBAction)closeMe
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
