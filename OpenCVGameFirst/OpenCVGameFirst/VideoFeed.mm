@@ -39,9 +39,9 @@ struct CvPoint2D32f {
             NSLog(@"Could not configure AVCaptureSession video input");
         }
         _captureSession = captureSession;
-        //doge = [UIImage imageNamed:@"fuckface.jpg"];
+        doge = [UIImage imageNamed:@"fuckface.jpg"];
         //NSLog(@"fuckface is %@",doge);
-        //fuckfaceMat = [self toCVMatFromRGB:doge];
+        fuckfaceMat = [self toCVMatFromRGB:doge];
         NSLog(@"post mat conversion");
     }
     return self;
@@ -173,7 +173,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         // improves accuracy to attempted subpixel (increases memory 10x)
         //cv::cornerSubPix(*gray_image, corners, cv::Size(11, 11), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
         
-        //cv::drawChessboardCorners(image, boardSize, corners, found);
+        cv::drawChessboardCorners(image, boardSize, corners, found);
         
         cv::Point2f p[4];
         cv::Point2f q[4];
@@ -214,6 +214,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //cv::Mat ffaceCopy;
         //fuckfaceMat.copyTo(ffaceCopy);
         //cv::warpPerspective(image, image, warp_matrix, ffaceSize);
+        //cv::perspectiveTransform(image, image, warp_matrix);
        // cv::getaf
         
         line( image, p[0], p[1], Scalar( 255, 255, 0 ), thickness );
@@ -224,13 +225,13 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         //place the dog over
         //cv::Size ffaceSize(ffaceCopy.size().width, ffaceCopy.size().height);
-        NSLog(@"ffacesizeb4 run are %d, %d", ffaceSize.height, ffaceSize.width);
-        //cv::Rect roi( p[0], ffaceSize);
-        //cv::Mat destinationROI = image( roi );
-        //fuckfaceMat.copyTo( destinationROI );
+        NSLog(@"ffacesizeb4 run are %d, %d", fuckfaceMat.size().height, fuckfaceMat.size().width);
+        cv::Rect roi( p[0], ffaceSize);
+        cv::Mat destinationROI = image( roi );
+        fuckfaceMat.copyTo( destinationROI );
         
-       // cv::solvePnP(<#InputArray objectPoints#>, <#InputArray imagePoints#>, <#InputArray cameraMatrix#>, <#InputArray distCoeffs#>, <#OutputArray rvec#>, <#OutputArray tvec#>);
-        
+        UIImage *img = [self fromCVMatRGB:fuckfaceMat];
+        NSLog(@"waithere");
     }
     
     //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);
@@ -265,4 +266,44 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     return cvMat;
 }
 #endif
+
+- (UIImage*)fromCVMatRGB:(const cv::Mat&)cvMat
+{
+    // (1) Construct the correct color space
+    CGColorSpaceRef colorSpace;
+    if ( cvMat.channels() == 1 ) {
+        colorSpace = CGColorSpaceCreateDeviceGray();
+    } else {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+    }
+    
+    // (2) Create image data reference
+    CFDataRef data = CFDataCreate(kCFAllocatorDefault, cvMat.data, (cvMat.elemSize() * cvMat.total()));
+    
+    // (3) Create CGImage from cv::Mat container
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
+    CGImageRef imageRef = CGImageCreate(cvMat.cols,
+                                        cvMat.rows,
+                                        8,
+                                        8 * cvMat.elemSize(),
+                                        cvMat.step[0],
+                                        colorSpace,
+                                        kCGImageAlphaNone | kCGBitmapByteOrderDefault,
+                                        provider,
+                                        NULL,
+                                        false,
+                                        kCGRenderingIntentDefault);
+    
+    // (4) Create UIImage from CGImage
+    UIImage * finalImage = [UIImage imageWithCGImage:imageRef];
+    
+    // (5) Release the references
+    CGImageRelease(imageRef);
+    CGDataProviderRelease(provider);
+    CFRelease(data);
+    CGColorSpaceRelease(colorSpace);
+    
+    // (6) Return the UIImage instance
+    return finalImage;
+}
 @end
