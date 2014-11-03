@@ -25,10 +25,9 @@
 		0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695D19E495B6000AD0A4 /* CoreVideo.framework */; };
 		0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E80822019E51C9500F83683 /* opencv2.framework */; };
 		0E80822319E5D8C100F83683 /* fuckface.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E80822219E5D8C100F83683 /* fuckface.jpg */; };
-		0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.m */; };
-		0EC6880819E61B7800E17BA9 /* DOJOCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880619E61B7800E17BA9 /* DOJOCameraViewController.m */; };
-		0EC6880B19E61BB700E17BA9 /* DOJOPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880919E61BB700E17BA9 /* DOJOPreviewView.m */; };
+		0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */; };
 		0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EC6880C19E620A400E17BA9 /* picbutton2x.png */; };
+		0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,12 +70,10 @@
 		0E80822019E51C9500F83683 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
 		0E80822219E5D8C100F83683 /* fuckface.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fuckface.jpg; sourceTree = SOURCE_ROOT; };
 		0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObtainCalibFramesViewController.h; sourceTree = "<group>"; };
-		0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObtainCalibFramesViewController.m; sourceTree = "<group>"; };
-		0EC6880619E61B7800E17BA9 /* DOJOCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOJOCameraViewController.m; sourceTree = SOURCE_ROOT; };
-		0EC6880719E61B7800E17BA9 /* DOJOCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOJOCameraViewController.h; sourceTree = SOURCE_ROOT; };
-		0EC6880919E61BB700E17BA9 /* DOJOPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOJOPreviewView.m; sourceTree = SOURCE_ROOT; };
-		0EC6880A19E61BB700E17BA9 /* DOJOPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOJOPreviewView.h; sourceTree = SOURCE_ROOT; };
+		0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObtainCalibFramesViewController.mm; sourceTree = "<group>"; };
 		0EC6880C19E620A400E17BA9 /* picbutton2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picbutton2x.png; path = images/picbutton2x.png; sourceTree = SOURCE_ROOT; };
+		0EFCBEF31A073EE600FA90BB /* VideoFeedCalibrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedCalibrate.h; sourceTree = "<group>"; };
+		0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoFeedCalibrate.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,12 +189,10 @@
 		0EC6880519E61A9300E17BA9 /* collector */ = {
 			isa = PBXGroup;
 			children = (
-				0EC6880719E61B7800E17BA9 /* DOJOCameraViewController.h */,
-				0EC6880619E61B7800E17BA9 /* DOJOCameraViewController.m */,
-				0EC6880A19E61BB700E17BA9 /* DOJOPreviewView.h */,
-				0EC6880919E61BB700E17BA9 /* DOJOPreviewView.m */,
+				0EFCBEF31A073EE600FA90BB /* VideoFeedCalibrate.h */,
+				0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */,
 				0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */,
-				0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.m */,
+				0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */,
 			);
 			name = collector;
 			sourceTree = "<group>";
@@ -314,10 +309,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E71692219E486B0000AD0A4 /* AppDelegate.m in Sources */,
-				0EC6880819E61B7800E17BA9 /* DOJOCameraViewController.m in Sources */,
+				0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */,
 				0E71695619E492DA000AD0A4 /* VideoFeed.mm in Sources */,
-				0EC6880B19E61BB700E17BA9 /* DOJOPreviewView.m in Sources */,
-				0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.m in Sources */,
+				0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */,
 				0E71695019E48906000AD0A4 /* FirstViewController.mm in Sources */,
 				0E71691F19E486B0000AD0A4 /* main.m in Sources */,
 			);

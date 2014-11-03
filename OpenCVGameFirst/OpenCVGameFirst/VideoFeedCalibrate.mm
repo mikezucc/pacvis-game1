@@ -1,31 +1,26 @@
 //
-//  VideoFeed.m
+//  VideoFeedCalibrate.m
 //  OpenCVGameFirst
 //
-//  Created by Michael Zuccarino on 10/7/14.
+//  Created by Michael Zuccarino on 11/2/14.
 //  Copyright (c) 2014 Michael Zuccarino. All rights reserved.
 //
 
-#import "VideoFeed.h"
+#import "VideoFeedCalibrate.h"
 using namespace cv;
-
-cv::Mat fuckfaceMat;
 
 struct CvPoint2D32f {
     double x;
     double y;
 };
 
-//TermCriteria crit = TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1);
+TermCriteria crit = TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1);
 
-@interface VideoFeed () <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface VideoFeedCalibrate () <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @end
 
-
-@implementation VideoFeed
-
-@synthesize doge;
+@implementation VideoFeedCalibrate
 
 #pragma mark -
 #pragma mark Object Lifecycle
@@ -41,10 +36,6 @@ struct CvPoint2D32f {
             NSLog(@"Could not configure AVCaptureSession video input");
         }
         _captureSession = captureSession;
-        doge = [UIImage imageNamed:@"fuckface.jpg"];
-        //NSLog(@"fuckface is %@",doge);
-        fuckfaceMat = [self toCVMatFromRGB:doge];
-        NSLog(@"post mat conversion");
     }
     return self;
 }
@@ -150,8 +141,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     // (4) Dispatch VideoFrame to VideoSource delegate
     
-    [self processImage:image];
-    
     [self.delegate frameReady:image];
     
     // (5) Unlock pixel buffer
@@ -165,10 +154,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     cv::Size _imageSize(image.size().width, image.size().height);
     cv::Size boardSize(3,3);
     bool found = cv::findChessboardCorners(image, boardSize, corners);
-    
-    cv::Size ffaceSize(fuckfaceMat.size().width, fuckfaceMat.size().height);
-    
-    //unnecessary calculation, since image is already converted to gray scale
+
     cv::Mat warp_matrix(3,3,CV_32FC3);
     //cv::cvtColor(image, *gray_image, COLOR_BGRA2GRAY);
     if (found) {
@@ -176,63 +162,6 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         //cv::cornerSubPix(*gray_image, corners, cv::Size(11, 11), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::MAX_ITER, 30, 0.1));
         
         cv::drawChessboardCorners(image, boardSize, corners, found);
-        cv::Point2f p[4];
-        cv::Point2f q[4];
-        cv::Point2f e[4];
-        
-        float m = 100;//pixel offset
-        float k = 1; //size multiplier
-        
-        e[0] = Point2f((0*k)+m,(0*k)+m);
-        e[1] = Point2f((100*k)+m,(0*k)+m);
-        e[2] = Point2f((100*k)+m,(100*k)+m);
-        e[3] = Point2f((0*k)+m,(100*k)+m);
-        
-        p[0] = Point2f(corners[0].x,corners[0].y);
-        p[1] = Point2f(corners[2].x,corners[2].y);
-        p[2] = Point2f(corners[8].x,corners[8].y);
-        p[3] = Point2f(corners[6].x,corners[6].y);
-        
-        //cv::Point2f simOrigin;
-        //simOrigin = Point2f(corners[4].x,corners[4].y);
-        
-        
-        //find cross product
-        //first use get v1 and v2
-        cv::Point2f v1 = Point2f(p[1].x-p[0].x,p[1].y-p[0].y);
-        cv::Point2f v2 = Point2f(p[2].x-p[0].x,p[2].y-p[0].y);
-        
-        cv::Point2f orthZ;
-        orthZ = Point2f(v1.x * v2.y, v1.y * v2.x);
-        //NSLog(@"\nv1: %f\nv1: %f",v1.x,v1.y);
-        //Mat lambda( 2, 4, CV_32FC4 );
-        //lambda = Mat::zeros( image.rows, image.cols, CV_32FC4);
-        warp_matrix = cv::getPerspectiveTransform(p,e);
-        //NSLog(@"orthZ points are %f, %f",e[1].x,e[1].y);
-        int thickness = 2;
-        int lineType = 8;
-        
-        //cv::Mat ffaceCopy;
-        //fuckfaceMat.copyTo(ffaceCopy);
-        //cv::warpPerspective(image, image, warp_matrix, ffaceSize);
-        //cv::perspectiveTransform(image, image, warp_matrix);
-       // cv::getaf
-        
-        line( image, p[0], p[1], Scalar( 255, 255, 0 ), thickness );
-        line( image, p[0], p[3], Scalar( 255, 0, 0 ), thickness );
-        line( image, p[1], p[2], Scalar( 0, 255, 0 ), thickness );
-        line( image, p[2], p[3], Scalar( 0, 255, 255 ), thickness );
-        //line( image, e[0], e[0], Scalar( 0, 0, 255), thickness );
-        
-        //place the dog over
-        //cv::Size ffaceSize(ffaceCopy.size().width, ffaceCopy.size().height);
-        NSLog(@"ffacesizeb4 run are %d, %d", fuckfaceMat.size().height, fuckfaceMat.size().width);
-        cv::Rect roi( p[0], ffaceSize);
-        cv::Mat destinationROI = image( roi );
-        fuckfaceMat.copyTo( destinationROI );
-        
-        UIImage *img = [self fromCVMatRGB:fuckfaceMat];
-        NSLog(@"waithere");
     }
     
     //NSLog(@"imagepoints is 1:%f 2:%f",corners(1),corners(2));//_imagePoints->push_back(corners);
@@ -307,4 +236,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     // (6) Return the UIImage instance
     return finalImage;
 }
+
+
+
 @end
