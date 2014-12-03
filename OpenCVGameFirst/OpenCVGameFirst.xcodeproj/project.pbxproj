@@ -25,7 +25,7 @@
 		0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695C19E495B6000AD0A4 /* CoreMedia.framework */; };
 		0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695D19E495B6000AD0A4 /* CoreVideo.framework */; };
 		0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E80822019E51C9500F83683 /* opencv2.framework */; };
-		0E80822319E5D8C100F83683 /* fuckface.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E80822219E5D8C100F83683 /* fuckface.jpg */; };
+		0E80822319E5D8C100F83683 /* testface.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E80822219E5D8C100F83683 /* testface.jpg */; };
 		0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */; };
 		0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EC6880C19E620A400E17BA9 /* picbutton2x.png */; };
 		0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */; };
@@ -71,7 +71,7 @@
 		0E71695C19E495B6000AD0A4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0E71695D19E495B6000AD0A4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		0E80822019E51C9500F83683 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
-		0E80822219E5D8C100F83683 /* fuckface.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fuckface.jpg; sourceTree = SOURCE_ROOT; };
+		0E80822219E5D8C100F83683 /* testface.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testface.jpg; sourceTree = SOURCE_ROOT; };
 		0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObtainCalibFramesViewController.h; sourceTree = "<group>"; };
 		0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObtainCalibFramesViewController.mm; sourceTree = "<group>"; };
 		0EC6880C19E620A400E17BA9 /* picbutton2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picbutton2x.png; path = images/picbutton2x.png; sourceTree = SOURCE_ROOT; };
@@ -206,7 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				0EC6880C19E620A400E17BA9 /* picbutton2x.png */,
-				0E80822219E5D8C100F83683 /* fuckface.jpg */,
+				0E80822219E5D8C100F83683 /* testface.jpg */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -295,7 +295,7 @@
 				0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */,
 				0E71692A19E486B0000AD0A4 /* Images.xcassets in Resources */,
 				0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */,
-				0E80822319E5D8C100F83683 /* fuckface.jpg in Resources */,
+				0E80822319E5D8C100F83683 /* testface.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
