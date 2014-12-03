@@ -24,6 +24,8 @@
 using namespace cv;
 using namespace std;
 
+double rmsForField;
+
 @interface HomeViewController ()
 
 @end
@@ -84,7 +86,7 @@ static double computeReprojectionErrors(const vector<vector<Point3f> >& objectPo
     {
         projectPoints(Mat(objectPoints[i]), rvecs[i], tvecs[i], cameraMatrix,
                       distCoeffs, imagePoints2);
-        err = norm(Mat(imagePoints[i]), Mat(imagePoints2), CV_L2);
+        err = norm(Mat(imagePoints[i]), Mat(imagePoints2), 4);
         
         int n = (int)objectPoints[i].size();
         perViewErrors[i] = (float)std::sqrt(err*err / n);
@@ -102,11 +104,10 @@ static void saveCameraParams(Mat& cameraMatrix, Mat& distCoeffs)
     fs << "Distortion_Coefficients" << distCoeffs;
 }
 
-void runCalib(String picListLocation)
+void runCalib(vector<String> listOfPicLocations)
 {
     double widthInp = 4, heightInp = 5;
     
-    namedWindow("Display window", WINDOW_AUTOSIZE); // Create a window for display.
     //IplImage *img;
     Mat imgMat;
     Mat rvecsMat;
@@ -127,21 +128,15 @@ void runCalib(String picListLocation)
     
     while (1) {
         if (photoNum == (widthInp * heightInp)) break;
-        cout << "start while" << endl;
         string imageName = "./images/" + to_string(photoNum) + ".jpg";
         imgMat = imread(imageName, 1);
         if (!imgMat.data) break;
-        cout << "image properly read with " << imgMat.cols << " cols" << endl;
         if (findChessboardCorners(imgMat, cv::Size(5, 4), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
         {
-            cout << "found chessboard corners" << endl;
             imgPoints.push_back(corners);
-            cout << "imgPoints dims are " << imgPoints.size() << endl;
             drawChessboardCorners(imgMat, boardSize, Mat(corners), true);
             //calibrateCamera()
         }
-        cout << "done through frame " << photoNum << endl;
-        imshow("Example2", imgMat);
         photoNum++;
     }
     vector<vector<Point3f>> objPoints(1);
@@ -151,18 +146,15 @@ void runCalib(String picListLocation)
     
     objPoints.resize(imgPoints.size(), objPoints[0]);
     
-    cout << "objPoints dims are " << objPoints.size() << endl;
     rms = calibrateCamera(objPoints, imgPoints, cv::Size(640, 480), cameraMatrix, distCoeffs, rvecs, tvecs, 0, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON));
     //Mat copyctn;
     rmsArr.push_back(rms);
-    cout << "error for " << photoNum << " is: " << rms << endl;
     
     double totalAvgErr = computeReprojectionErrors(objPoints, imgPoints, rvecs, tvecs, cameraMatrix, distCoeffs, reprojErrs);
     
-    cout << "total average error: " << totalAvgErr << endl;
-    cout << "Saving parameters..." << endl;
+    rmsForField = totalAvgErr;
+    
     saveCameraParams(cameraMatrix, distCoeffs);
-    cout << "Done saving to \"cameraParams.xml\"" << endl;
     
 }
 #endif
