@@ -28,11 +28,14 @@ double rmsForField;
 
 @interface HomeViewController ()
 
+// Session management.
+@property (nonatomic) dispatch_queue_t sessionQueue;
+
 @end
 
 @implementation HomeViewController
 
-@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8, chessboardDisplay;
+@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8, chessboardDisplay, sessionQueue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,7 +65,7 @@ double rmsForField;
         // do nothing
         numberOfImagesField.text = @"0";
     }
-    chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 120, 120)];
+    chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(40, 260, 240, 240)];
     chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:chessboardDisplay];
 
@@ -87,7 +90,14 @@ double rmsForField;
             tempList.push_back(convString);
         }
         NSLog(@"beginning calibration");
-        [self runCalib:tempList];
+        dispatch_queue_t queue;
+        queue = dispatch_queue_create("com.example.calibThread", DISPATCH_QUEUE_SERIAL);
+        sessionQueue = dispatch_queue_create("com.example.chessDisplayThread", DISPATCH_QUEUE_SERIAL);
+        __weak typeof(self) _weakSelf = self;
+        dispatch_async(queue, ^{
+            HomeViewController *strongSelf = _weakSelf;
+            [strongSelf runCalib:tempList];
+        });
         NSLog(@"returned to calling thread");
         rmsField.text = [NSString stringWithFormat:@"%f",(float)rmsForField];
     }
@@ -240,8 +250,12 @@ Mat loadACalibrationImage(String filepath)
 {
     NSLog(@"portraying drawn chessboard");
     UIImage *converted = [self fromCVMatRGB:cvMat];
-    __weak typeof(self) _weakSelf = self;
-    [self.chessboardDisplay setImage:converted];
+    dispatch_async(sessionQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"display chessboard in nested queue");
+            [[self chessboardDisplay] setImage:converted];
+        });
+    });
 }
 
 -(void)runCalib:(vector<String>)listOfPicLocations
@@ -304,6 +318,7 @@ Mat loadACalibrationImage(String filepath)
     double totalAvgErr = computeReprojectionErrors(objPoints, imgPoints, rvecs, tvecs, cameraMatrix, distCoeffs, reprojErrs);
     
     rmsForField = totalAvgErr;
+    [self.rmsField setText:[NSString stringWithFormat:@"%f",(float)rmsForField]];
     NSLog(@"total Average Error: %f",(float)totalAvgErr);
     
     saveCameraParams(cameraMatrix, distCoeffs);
