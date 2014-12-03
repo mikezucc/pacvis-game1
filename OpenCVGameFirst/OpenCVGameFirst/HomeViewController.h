@@ -14,6 +14,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *runCalibrationScheme;
 @property (strong, nonatomic) IBOutlet UIButton *poseEstim8;
 
+@property (strong, nonatomic) UIImageView *chessboardDisplay;
+
 @property (strong, nonatomic) IBOutlet UITextField *numberOfImagesField;
 @property (strong, nonatomic) IBOutlet UITextField *rmsField;
 //@property (strong, nonatomic) IBOutlet UITextField *numberOfImagesField;

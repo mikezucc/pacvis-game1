@@ -32,7 +32,7 @@ double rmsForField;
 
 @implementation HomeViewController
 
-@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8;
+@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8, chessboardDisplay;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -62,6 +62,9 @@ double rmsForField;
         // do nothing
         numberOfImagesField.text = @"0";
     }
+    chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 120, 120)];
+    chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
+    [self.view addSubview:chessboardDisplay];
 
 }
 
@@ -84,7 +87,7 @@ double rmsForField;
             tempList.push_back(convString);
         }
         NSLog(@"beginning calibration");
-        runCalib(tempList);
+        [self runCalib:tempList];
         NSLog(@"returned to calling thread");
         rmsField.text = [NSString stringWithFormat:@"%f",(float)rmsForField];
     }
@@ -193,7 +196,55 @@ Mat loadACalibrationImage(String filepath)
 }
 
 
-void runCalib(vector<String> listOfPicLocations)
+- (UIImage*)fromCVMatRGB:(const cv::Mat&)cvMat
+{
+    // (1) Construct the correct color space
+    CGColorSpaceRef colorSpace;
+    if ( cvMat.channels() == 1 ) {
+        colorSpace = CGColorSpaceCreateDeviceGray();
+    } else {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+    }
+    
+    // (2) Create image data reference
+    CFDataRef data = CFDataCreate(kCFAllocatorDefault, cvMat.data, (cvMat.elemSize() * cvMat.total()));
+    
+    // (3) Create CGImage from cv::Mat container
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
+    CGImageRef imageRef = CGImageCreate(cvMat.cols,
+                                        cvMat.rows,
+                                        8,
+                                        8 * cvMat.elemSize(),
+                                        cvMat.step[0],
+                                        colorSpace,
+                                        kCGImageAlphaNone | kCGBitmapByteOrderDefault,
+                                        provider,
+                                        NULL,
+                                        false,
+                                        kCGRenderingIntentDefault);
+    
+    // (4) Create UIImage from CGImage
+    UIImage * finalImage = [UIImage imageWithCGImage:imageRef];
+    
+    // (5) Release the references
+    CGImageRelease(imageRef);
+    CGDataProviderRelease(provider);
+    CFRelease(data);
+    CGColorSpaceRelease(colorSpace);
+    
+    // (6) Return the UIImage instance
+    return finalImage;
+}
+
+-(void)displayThisChessBoard:(const cv::Mat&)cvMat
+{
+    NSLog(@"portraying drawn chessboard");
+    UIImage *converted = [self fromCVMatRGB:cvMat];
+    __weak typeof(self) _weakSelf = self;
+    [self.chessboardDisplay setImage:converted];
+}
+
+-(void)runCalib:(vector<String>)listOfPicLocations
 {
     double widthInp = 4, heightInp = 5;
     
@@ -232,6 +283,9 @@ void runCalib(vector<String> listOfPicLocations)
         {
             imgPoints.push_back(corners);
             drawChessboardCorners(imgMat, boardSize, Mat(corners), true);
+            //dispatch_async( dispatch_get_main_queue(), ^{
+                [self displayThisChessBoard:imgMat];
+            //});
             //calibrateCamera()
         }
         photoNum++;
@@ -256,6 +310,7 @@ void runCalib(vector<String> listOfPicLocations)
     
 }
 #endif
+
 
 
 /*
