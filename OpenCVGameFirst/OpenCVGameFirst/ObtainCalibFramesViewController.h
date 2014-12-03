@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface ObtainCalibFramesViewController : UIViewController
+
+@property (strong, nonatomic) IBOutlet UIButton *closeMeButton;
+@property (strong, nonatomic) IBOutlet UIButton *useMeButton;
+@property (strong, nonatomic) IBOutlet UIImageView *selectedImageView;
+
+@property (strong, nonatomic) UIImage *capturedImage;
 
 @end

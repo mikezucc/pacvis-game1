@@ -691,9 +691,14 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 {
     if ([[segue identifier] isEqualToString:@"toVerifyController"])
     {
-        
         // Get reference to the destination view controller
         ObtainCalibFramesViewController *vc = [segue destinationViewController];
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSURL *selectedPath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"captured.jpeg"]];
+        
+        vc.capturedImage = [UIImage imageWithContentsOfFile:selectedPath.path];
         
         NSLog(@"applying properties");
         
