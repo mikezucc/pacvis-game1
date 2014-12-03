@@ -81,10 +81,10 @@
             </objects>
             <point key="canvasLocation" x="164.80000000000001" y="196.90666666666667"/>
         </scene>
-        <!--Camera View Controller-->
+        <!--Obtain Calib Frames View Controller-->
         <scene sceneID="9iz-rI-uUk">
             <objects>
-                <viewController id="o8q-60-vD4" customClass="DOJOCameraViewController" sceneMemberID="viewController">
+                <viewController id="o8q-60-vD4" customClass="ObtainCalibFramesViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YEm-er-SUm"/>
                         <viewControllerLayoutGuide type="bottom" id="50d-q4-jOO"/>
@@ -108,7 +108,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="removeYoself:" destination="o8q-60-vD4" eventType="touchUpInside" id="CSh-Zh-SGv"/>
+                                    <action selector="closeMe" destination="o8q-60-vD4" eventType="touchUpInside" id="kEx-cA-kJi"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -125,11 +125,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L5Y-mx-tUC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="rse-ip-7Vm">
-                    <connections>
-                        <action selector="focusAndExposeTap:" destination="o8q-60-vD4" id="5mk-vV-lv2"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="rse-ip-7Vm"/>
             </objects>
             <point key="canvasLocation" x="-348.80000000000001" y="968.43999999999994"/>
         </scene>
