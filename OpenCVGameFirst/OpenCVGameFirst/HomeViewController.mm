@@ -141,7 +141,7 @@ static double computeReprojectionErrors(const vector<vector<Point3f> >& objectPo
         projectPoints(Mat(objectPoints[i]), rvecs[i], tvecs[i], cameraMatrix,
                       distCoeffs, imagePoints2);
         err = norm(Mat(imagePoints[i]), Mat(imagePoints2), 4);
-        
+        NSLog(@"error for objpt: %ld is: %f",(long)i,(float)err);
         int n = (int)objectPoints[i].size();
         perViewErrors[i] = (float)std::sqrt(err*err / n);
         totalErr += err*err;
@@ -245,7 +245,6 @@ void runCalib(vector<String> listOfPicLocations)
     
     rms = calibrateCamera(objPoints, imgPoints, cv::Size(640, 480), cameraMatrix, distCoeffs, rvecs, tvecs, 0, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON));
     NSLog(@"rms is %f",(float)rms);
-    //Mat copyctn;
     rmsArr.push_back(rms);
     
     double totalAvgErr = computeReprojectionErrors(objPoints, imgPoints, rvecs, tvecs, cameraMatrix, distCoeffs, reprojErrs);

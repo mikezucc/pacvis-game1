@@ -9,7 +9,7 @@
 #import "VideoFeed.h"
 using namespace cv;
 
-cv::Mat fuckfaceMat;
+cv::Mat testfaceMat;
 
 struct CvPoint2D32f {
     double x;
@@ -41,9 +41,9 @@ struct CvPoint2D32f {
             NSLog(@"Could not configure AVCaptureSession video input");
         }
         _captureSession = captureSession;
-        doge = [UIImage imageNamed:@"fuckface.jpg"];
-        //NSLog(@"fuckface is %@",doge);
-        fuckfaceMat = [self toCVMatFromRGB:doge];
+        doge = [UIImage imageNamed:@"testface.jpg"];
+        //NSLog(@"testface is %@",doge);
+        testfaceMat = [self toCVMatFromRGB:doge];
         NSLog(@"post mat conversion");
     }
     return self;
@@ -166,7 +166,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     cv::Size boardSize(3,3);
     bool found = cv::findChessboardCorners(image, boardSize, corners);
     
-    cv::Size ffaceSize(fuckfaceMat.size().width, fuckfaceMat.size().height);
+    cv::Size ffaceSize(testfaceMat.size().width, testfaceMat.size().height);
     
     //unnecessary calculation, since image is already converted to gray scale
     cv::Mat warp_matrix(3,3,CV_32FC3);
@@ -213,7 +213,7 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         int lineType = 8;
         
         //cv::Mat ffaceCopy;
-        //fuckfaceMat.copyTo(ffaceCopy);
+        //testfaceMat.copyTo(ffaceCopy);
         //cv::warpPerspective(image, image, warp_matrix, ffaceSize);
         //cv::perspectiveTransform(image, image, warp_matrix);
        // cv::getaf
@@ -226,12 +226,12 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
         
         //place the dog over
         //cv::Size ffaceSize(ffaceCopy.size().width, ffaceCopy.size().height);
-        NSLog(@"ffacesizeb4 run are %d, %d", fuckfaceMat.size().height, fuckfaceMat.size().width);
+        NSLog(@"ffacesizeb4 run are %d, %d", testfaceMat.size().height, testfaceMat.size().width);
         cv::Rect roi( p[0], ffaceSize);
         cv::Mat destinationROI = image( roi );
-        fuckfaceMat.copyTo( destinationROI );
+        testfaceMat.copyTo( destinationROI );
         
-        UIImage *img = [self fromCVMatRGB:fuckfaceMat];
+        UIImage *img = [self fromCVMatRGB:testfaceMat];
         NSLog(@"waithere");
     }
     
