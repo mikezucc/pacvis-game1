@@ -100,6 +100,13 @@ Mat distortionCoeffGlobal;
         dispatch_async(queue, ^{
             HomeViewController *strongSelf = _weakSelf;
             [strongSelf runCalib:tempList];
+            dispatch_async(sessionQueue, ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    NSLog(@"finished run Calib, displaying params");
+                    cout << endl << "cameraMatrix Global:\n" << cameraMatrixGlobal << endl;
+                    cout << endl << "distortionMatrix Global:\n" << distortionCoeffGlobal << endl;
+                });
+            });
         });
         NSLog(@"returned to calling thread");
         rmsField.text = [NSString stringWithFormat:@"%f",(float)rmsForField];
@@ -325,7 +332,12 @@ Mat loadACalibrationImage(String filepath)
     double totalAvgErr = computeReprojectionErrors(objPoints, imgPoints, rvecs, tvecs, cameraMatrix, distCoeffs, reprojErrs);
     
     rmsForField = totalAvgErr;
-    [self.rmsField setText:[NSString stringWithFormat:@"%f",(float)rmsForField]];
+    dispatch_async(sessionQueue, ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSLog(@"display chessboard in nested queue");
+            [[self rmsField] setText:[NSString stringWithFormat:@"%f",(float)rmsForField]];
+        });
+    });
     NSLog(@"total Average Error: %f",(float)totalAvgErr);
     
     saveCameraParams(cameraMatrix, distCoeffs);
