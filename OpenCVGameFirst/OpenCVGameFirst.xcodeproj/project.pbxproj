@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B45111A2E949200C6AC91 /* HomeViewController.mm */; };
 		0E71691F19E486B0000AD0A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71691E19E486B0000AD0A4 /* main.m */; };
 		0E71692219E486B0000AD0A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71692119E486B0000AD0A4 /* AppDelegate.m */; };
 		0E71692819E486B0000AD0A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0E71692619E486B0000AD0A4 /* Main.storyboard */; };
 		0E71692A19E486B0000AD0A4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E71692919E486B0000AD0A4 /* Images.xcassets */; };
 		0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0E71692B19E486B0000AD0A4 /* LaunchScreen.xib */; };
 		0E71693919E486B1000AD0A4 /* OpenCVGameFirstTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71693819E486B1000AD0A4 /* OpenCVGameFirstTests.m */; };
-		0E71694319E487A0000AD0A4 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694219E487A0000AD0A4 /* opencv2.framework */; };
 		0E71694719E487C5000AD0A4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694419E487C5000AD0A4 /* CoreGraphics.framework */; };
 		0E71694819E487C5000AD0A4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694519E487C5000AD0A4 /* Foundation.framework */; };
 		0E71694919E487C5000AD0A4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71694619E487C5000AD0A4 /* UIKit.framework */; };
@@ -24,6 +24,11 @@
 		0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695B19E495B6000AD0A4 /* CoreImage.framework */; };
 		0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695C19E495B6000AD0A4 /* CoreMedia.framework */; };
 		0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695D19E495B6000AD0A4 /* CoreVideo.framework */; };
+		0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E80822019E51C9500F83683 /* opencv2.framework */; };
+		0E80822319E5D8C100F83683 /* fuckface.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E80822219E5D8C100F83683 /* fuckface.jpg */; };
+		0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */; };
+		0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EC6880C19E620A400E17BA9 /* picbutton2x.png */; };
+		0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E3B45101A2E949200C6AC91 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
+		0E3B45111A2E949200C6AC91 /* HomeViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HomeViewController.mm; sourceTree = "<group>"; };
 		0E71691919E486B0000AD0A4 /* OpenCVGameFirst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCVGameFirst.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E71691D19E486B0000AD0A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E71691E19E486B0000AD0A4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -48,7 +55,6 @@
 		0E71693219E486B0000AD0A4 /* OpenCVGameFirstTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenCVGameFirstTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0E71693719E486B1000AD0A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0E71693819E486B1000AD0A4 /* OpenCVGameFirstTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenCVGameFirstTests.m; sourceTree = "<group>"; };
-		0E71694219E487A0000AD0A4 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../../../Downloads/opencv2.framework; sourceTree = "<group>"; };
 		0E71694419E487C5000AD0A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0E71694519E487C5000AD0A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E71694619E487C5000AD0A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -64,6 +70,13 @@
 		0E71695B19E495B6000AD0A4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		0E71695C19E495B6000AD0A4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0E71695D19E495B6000AD0A4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		0E80822019E51C9500F83683 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
+		0E80822219E5D8C100F83683 /* fuckface.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = fuckface.jpg; sourceTree = SOURCE_ROOT; };
+		0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObtainCalibFramesViewController.h; sourceTree = "<group>"; };
+		0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObtainCalibFramesViewController.mm; sourceTree = "<group>"; };
+		0EC6880C19E620A400E17BA9 /* picbutton2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = picbutton2x.png; path = images/picbutton2x.png; sourceTree = SOURCE_ROOT; };
+		0EFCBEF31A073EE600FA90BB /* VideoFeedCalibrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoFeedCalibrate.h; sourceTree = "<group>"; };
+		0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = VideoFeedCalibrate.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,12 +87,12 @@
 				0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */,
 				0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */,
 				0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */,
+				0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */,
 				0E71695919E49589000AD0A4 /* AVFoundation.framework in Frameworks */,
 				0E71695A19E49589000AD0A4 /* AVKit.framework in Frameworks */,
 				0E71694719E487C5000AD0A4 /* CoreGraphics.framework in Frameworks */,
 				0E71694819E487C5000AD0A4 /* Foundation.framework in Frameworks */,
 				0E71694919E487C5000AD0A4 /* UIKit.framework in Frameworks */,
-				0E71694319E487A0000AD0A4 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +109,7 @@
 		0E71691019E486B0000AD0A4 = {
 			isa = PBXGroup;
 			children = (
+				0E80822019E51C9500F83683 /* opencv2.framework */,
 				0E71695B19E495B6000AD0A4 /* CoreImage.framework */,
 				0E71695C19E495B6000AD0A4 /* CoreMedia.framework */,
 				0E71695D19E495B6000AD0A4 /* CoreVideo.framework */,
@@ -126,8 +140,11 @@
 				0E71692019E486B0000AD0A4 /* AppDelegate.h */,
 				0E71692119E486B0000AD0A4 /* AppDelegate.m */,
 				0E71695319E48B39000AD0A4 /* just camera things */,
-				0E71694219E487A0000AD0A4 /* opencv2.framework */,
 				0E71692619E486B0000AD0A4 /* Main.storyboard */,
+				0E3B45101A2E949200C6AC91 /* HomeViewController.h */,
+				0E3B45111A2E949200C6AC91 /* HomeViewController.mm */,
+				0EC6880E19E620B600E17BA9 /* images */,
+				0EC6880519E61A9300E17BA9 /* collector */,
 				0E71692919E486B0000AD0A4 /* Images.xcassets */,
 				0E71692B19E486B0000AD0A4 /* LaunchScreen.xib */,
 				0E71691C19E486B0000AD0A4 /* Supporting Files */,
@@ -172,6 +189,26 @@
 				0E71695519E492DA000AD0A4 /* VideoFeed.mm */,
 			);
 			name = "just camera things";
+			sourceTree = "<group>";
+		};
+		0EC6880519E61A9300E17BA9 /* collector */ = {
+			isa = PBXGroup;
+			children = (
+				0EFCBEF31A073EE600FA90BB /* VideoFeedCalibrate.h */,
+				0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */,
+				0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */,
+				0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */,
+			);
+			name = collector;
+			sourceTree = "<group>";
+		};
+		0EC6880E19E620B600E17BA9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				0EC6880C19E620A400E17BA9 /* picbutton2x.png */,
+				0E80822219E5D8C100F83683 /* fuckface.jpg */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +294,8 @@
 				0E71692819E486B0000AD0A4 /* Main.storyboard in Resources */,
 				0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */,
 				0E71692A19E486B0000AD0A4 /* Images.xcassets in Resources */,
+				0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */,
+				0E80822319E5D8C100F83683 /* fuckface.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +314,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E71692219E486B0000AD0A4 /* AppDelegate.m in Sources */,
+				0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */,
 				0E71695619E492DA000AD0A4 /* VideoFeed.mm in Sources */,
+				0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */,
 				0E71695019E48906000AD0A4 /* FirstViewController.mm in Sources */,
 				0E71691F19E486B0000AD0A4 /* main.m in Sources */,
+				0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +444,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
+					/Users/mikezucc/Documents/iosclass,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -416,6 +459,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
+					/Users/mikezucc/Documents/iosclass,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -476,6 +520,7 @@
 				0E71693E19E486B1000AD0A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0E71693F19E486B1000AD0A4 /* Build configuration list for PBXNativeTarget "OpenCVGameFirstTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +529,7 @@
 				0E71694119E486B1000AD0A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

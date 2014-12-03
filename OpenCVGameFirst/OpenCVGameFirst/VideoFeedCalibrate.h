@@ -1,8 +1,8 @@
 //
-//  VideoFeed.h
+//  VideoFeedCalibrate.h
 //  OpenCVGameFirst
 //
-//  Created by Michael Zuccarino on 10/7/14.
+//  Created by Michael Zuccarino on 11/2/14.
 //  Copyright (c) 2014 Michael Zuccarino. All rights reserved.
 //
 
@@ -34,11 +34,12 @@
 
 @end
 
+
 #pragma mark -
 #pragma mark VideoSource Interface
 
 
-@interface VideoFeed : NSObject
+@interface VideoFeedCalibrate : NSObject
 
 @property (nonatomic, strong) AVCaptureSession * captureSession;
 @property (nonatomic, strong) AVCaptureDeviceInput * deviceInput;

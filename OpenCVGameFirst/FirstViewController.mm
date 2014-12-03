@@ -14,6 +14,8 @@
 
 @implementation FirstViewController
 
+@synthesize closeThisView;
+
 -(void)viewDidLoad
 {
     [super viewDidLoad];
@@ -23,6 +25,16 @@
     
     self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 480, 640)];
     [self.view addSubview:self.backgroundImageView];
+    
+    closeThisView = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 40, 40)];
+    [closeThisView setTitle:@"close me" forState:UIControlStateNormal];
+    [closeThisView addTarget:self action:@selector(closeMe)forControlEvents:UIControlStateNormal];
+    [self.view addSubview:closeThisView];
+}
+
+-(IBAction)closeMe
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,11 +44,12 @@
 
 #pragma mark -
 #pragma mark VideoSource Delegate
-- (void)frameReady:(struct VideoFrame)frame {
+- (void)frameReady:(const cv::Mat&)frame {
     __weak typeof(self) _weakSelf = self;
     dispatch_sync( dispatch_get_main_queue(), ^{
         // Construct CGContextRef from VideoFrame
         //NSLog(@"did capture a frame %s, with stride %zu",frame.data, frame.stride);
+        /*
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef newContext = CGBitmapContextCreate(frame.data,
                                                         frame.width,
@@ -55,11 +68,52 @@
         CGImageRelease(newImage);
         CGContextRelease(newContext);
         CGColorSpaceRelease(colorSpace);
-        [[_weakSelf backgroundImageView] setImage:image];
+         */
+        UIImage *convImg = [self fromCVMat:frame];
+        [[_weakSelf backgroundImageView] setImage:convImg];
         [[_weakSelf backgroundImageView] setNeedsDisplay];
     });
 }
 
+- (UIImage*)fromCVMat:(const cv::Mat&)cvMat
+{
+    // (1) Construct the correct color space
+    CGColorSpaceRef colorSpace;
+    if ( cvMat.channels() == 1 ) {
+        colorSpace = CGColorSpaceCreateDeviceGray();
+    } else {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+    }
+    
+    // (2) Create image data reference
+    CFDataRef data = CFDataCreate(kCFAllocatorDefault, cvMat.data, (cvMat.elemSize() * cvMat.total()));
+    
+    // (3) Create CGImage from cv::Mat container
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
+    CGImageRef imageRef = CGImageCreate(cvMat.cols,
+                                        cvMat.rows,
+                                        8,
+                                        8 * cvMat.elemSize(),
+                                        cvMat.step[0],
+                                        colorSpace,
+                                        kCGImageAlphaNone | kCGBitmapByteOrderDefault,
+                                        provider,
+                                        NULL,
+                                        false,
+                                        kCGRenderingIntentDefault);
+    
+    // (4) Create UIImage from CGImage
+    UIImage * finalImage = [UIImage imageWithCGImage:imageRef];
+    
+    // (5) Release the references
+    CGImageRelease(imageRef);
+    CGDataProviderRelease(provider);
+    CFRelease(data);
+    CGColorSpaceRelease(colorSpace);
+    
+    // (6) Return the UIImage instance
+    return finalImage;
+}
 
 /*
 #pragma mark - Navigation

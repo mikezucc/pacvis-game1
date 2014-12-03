@@ -14,4 +14,8 @@
 @property (nonatomic, strong) VideoFeed *videoSource;
 @property (nonatomic, strong) IBOutlet UIImageView *backgroundImageView;
 
+@property (nonatomic, strong) IBOutlet UIButton *closeThisView;
+
+-(IBAction)closeMe;
+
 @end

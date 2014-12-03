@@ -1,9 +1,179 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WMu-p5-foz">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
+        <!--Home View Controller-->
+        <scene sceneID="SqV-XC-NOZ">
+            <objects>
+                <viewController id="WMu-p5-foz" customClass="HomeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="88f-c3-Xr6"/>
+                        <viewControllerLayoutGuide type="bottom" id="m2X-ei-a5w"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V6o-YU-HYD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn5-bi-Y0L">
+                                <rect key="frame" x="80" y="111" width="161" height="30"/>
+                                <state key="normal" title="Obtain Calibration Data">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="obtainCalibration:" destination="WMu-p5-foz" eventType="touchUpInside" id="0Mj-Xz-kuD"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qS6-eg-uT7">
+                                <rect key="frame" x="171" y="145" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSI-91-0EA">
+                                <rect key="frame" x="69" y="28" width="183" height="30"/>
+                                <state key="normal" title="Record Calibration Images">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="o8q-60-vD4" kind="modal" id="ZV4-q1-9DQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num Imgs collected:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wh-nB-rko">
+                                <rect key="frame" x="7" y="66" width="156" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfI-Cp-hza">
+                                <rect key="frame" x="171" y="62" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtS-yz-Beo">
+                                <rect key="frame" x="111" y="234" width="99" height="30"/>
+                                <state key="normal" title="POSE ESTIM8">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="vXZ-lx-hvc" kind="modal" id="qpF-UA-XXx"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="rms:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Deo-fM-MWR">
+                                <rect key="frame" x="129" y="149" width="34" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="numberOfImagesField" destination="qfI-Cp-hza" id="EUa-hj-IEf"/>
+                        <outlet property="poseEstim8" destination="GtS-yz-Beo" id="dXC-8g-Pbw"/>
+                        <outlet property="recordCalibImages" destination="NSI-91-0EA" id="fgE-E3-FYD"/>
+                        <outlet property="rmsField" destination="qS6-eg-uT7" id="3pu-YC-e0k"/>
+                        <outlet property="runCalibrationScheme" destination="Wn5-bi-Y0L" id="0BE-J0-3a8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="V4Y-NN-fY0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="164.80000000000001" y="196.90666666666667"/>
+        </scene>
+        <!--Obtain Calib Frames View Controller-->
+        <scene sceneID="9iz-rI-uUk">
+            <objects>
+                <viewController id="o8q-60-vD4" customClass="ObtainCalibFramesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YEm-er-SUm"/>
+                        <viewControllerLayoutGuide type="bottom" id="50d-q4-jOO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vDu-NI-6mc" customClass="DOJOPreviewView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qas-9I-jWf">
+                                <rect key="frame" x="140" y="426" width="121" height="66"/>
+                                <state key="normal" image="picbutton2x.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="snapStillImage:" destination="o8q-60-vD4" eventType="touchUpInside" id="sKX-HZ-WZ5"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGc-21-cJb">
+                                <rect key="frame" x="21" y="20" width="37" height="30"/>
+                                <state key="normal" title="close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeMe" destination="o8q-60-vD4" eventType="touchUpInside" id="kEx-cA-kJi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="rse-ip-7Vm" appends="YES" id="xLk-I2-S5a"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="previewView" destination="vDu-NI-6mc" id="iqD-l6-fCP"/>
+                        <outlet property="stillButton" destination="qas-9I-jWf" id="fLc-YY-2pk"/>
+                        <segue destination="wVw-Ku-4xw" kind="modal" identifier="toVerifyController" id="7ro-yG-4m4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L5Y-mx-tUC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="rse-ip-7Vm"/>
+            </objects>
+            <point key="canvasLocation" x="-348.80000000000001" y="968.43999999999994"/>
+        </scene>
+        <!--Obtain Calib Frames View Controller-->
+        <scene sceneID="J9w-7P-QDK">
+            <objects>
+                <viewController storyboardIdentifier="obtainController" id="wVw-Ku-4xw" customClass="ObtainCalibFramesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Vu-ae-DfK"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Pg-Rk-2L3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SZQ-k7-WGH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hiW-eU-wzY">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eIt-tg-aV1">
+                                <rect key="frame" x="16" y="20" width="37" height="30"/>
+                                <state key="normal" title="close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeMe:" destination="wVw-Ku-4xw" eventType="touchUpInside" id="rsZ-RT-Xbm"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dod-1N-j5q">
+                                <rect key="frame" x="173" y="386" width="54" height="30"/>
+                                <state key="normal" title="use this">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="useThisPicture:" destination="wVw-Ku-4xw" eventType="touchUpInside" id="5M7-yJ-aBt"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="closeMeButton" destination="eIt-tg-aV1" id="LxG-gE-4FB"/>
+                        <outlet property="selectedImageView" destination="hiW-eU-wzY" id="hSb-ln-Qh8"/>
+                        <outlet property="useMeButton" destination="Dod-1N-j5q" id="JfR-X5-63k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VsG-js-xhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-349" y="1668"/>
+        </scene>
         <!--First View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
@@ -13,35 +183,36 @@
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="igi-Fl-z96">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.71023235870000001" green="1" blue="0.45224533189999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <variation key="heightClass=compact-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="400"/>
-                                </variation>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egT-cP-duq">
+                                <rect key="frame" x="16" y="20" width="37" height="30"/>
+                                <state key="normal" title="close">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeMe" destination="vXZ-lx-hvc" eventType="touchUpInside" id="PSm-5G-sBY"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="igi-Fl-z96"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="igi-Fl-z96"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
-                        <outlet property="backgroundImageView" destination="igi-Fl-z96" id="lLc-pB-ZZx"/>
+                        <outlet property="closeThisView" destination="egT-cP-duq" id="oKw-GT-cHU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="617.60000000000002" y="983.5866666666667"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="picbutton2x.png" width="230" height="126"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
 </document>
