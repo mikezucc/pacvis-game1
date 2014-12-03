@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E2E7C901A2F3AA900710CBC /* DOJOCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.m */; };
+		0E2E7C901A2F3AA900710CBC /* DOJOCameraViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.mm */; };
 		0E2E7C931A2F3D4C00710CBC /* DOJOPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E7C921A2F3D4C00710CBC /* DOJOPreviewView.m */; };
-		0E2E7C941A2F417400710CBC /* OpenCVGameFirst-Prefix.pch in Sources */ = {isa = PBXBuildFile; fileRef = 0E71694A19E487F6000AD0A4 /* OpenCVGameFirst-Prefix.pch */; };
+		0E2E7C981A2FB8AF00710CBC /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C971A2FB8AF00710CBC /* opencv2.framework */; };
+		0E2E7C9A1A2FBAFB00710CBC /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */; };
 		0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B45111A2E949200C6AC91 /* HomeViewController.mm */; };
 		0E71691F19E486B0000AD0A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71691E19E486B0000AD0A4 /* main.m */; };
 		0E71692219E486B0000AD0A4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71692119E486B0000AD0A4 /* AppDelegate.m */; };
@@ -27,7 +28,6 @@
 		0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695B19E495B6000AD0A4 /* CoreImage.framework */; };
 		0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695C19E495B6000AD0A4 /* CoreMedia.framework */; };
 		0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E71695D19E495B6000AD0A4 /* CoreVideo.framework */; };
-		0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E80822019E51C9500F83683 /* opencv2.framework */; };
 		0E80822319E5D8C100F83683 /* testface.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0E80822219E5D8C100F83683 /* testface.jpg */; };
 		0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */; };
 		0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0EC6880C19E620A400E17BA9 /* picbutton2x.png */; };
@@ -46,9 +46,11 @@
 
 /* Begin PBXFileReference section */
 		0E2E7C8E1A2F3AA900710CBC /* DOJOCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOJOCameraViewController.h; sourceTree = "<group>"; };
-		0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOJOCameraViewController.m; sourceTree = "<group>"; };
+		0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DOJOCameraViewController.mm; sourceTree = "<group>"; };
 		0E2E7C911A2F3D4C00710CBC /* DOJOPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOJOPreviewView.h; sourceTree = "<group>"; };
 		0E2E7C921A2F3D4C00710CBC /* DOJOPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOJOPreviewView.m; sourceTree = "<group>"; };
+		0E2E7C971A2FB8AF00710CBC /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0E3B45101A2E949200C6AC91 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		0E3B45111A2E949200C6AC91 /* HomeViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HomeViewController.mm; sourceTree = "<group>"; };
 		0E71691919E486B0000AD0A4 /* OpenCVGameFirst.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenCVGameFirst.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -65,7 +67,7 @@
 		0E71694419E487C5000AD0A4 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		0E71694519E487C5000AD0A4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0E71694619E487C5000AD0A4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		0E71694A19E487F6000AD0A4 /* OpenCVGameFirst-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenCVGameFirst-Prefix.pch"; sourceTree = "<group>"; };
+		0E71694A19E487F6000AD0A4 /* OpenCVGameFirst-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OpenCVGameFirst-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		0E71694E19E48906000AD0A4 /* FirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FirstViewController.h; path = ../FirstViewController.h; sourceTree = "<group>"; };
 		0E71694F19E48906000AD0A4 /* FirstViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = FirstViewController.mm; path = ../FirstViewController.mm; sourceTree = "<group>"; };
 		0E71695119E48AF9000AD0A4 /* CameraCalibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraCalibration.h; sourceTree = SOURCE_ROOT; };
@@ -77,7 +79,6 @@
 		0E71695B19E495B6000AD0A4 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		0E71695C19E495B6000AD0A4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		0E71695D19E495B6000AD0A4 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		0E80822019E51C9500F83683 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = ../../opencv2.framework; sourceTree = "<group>"; };
 		0E80822219E5D8C100F83683 /* testface.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = testface.jpg; sourceTree = SOURCE_ROOT; };
 		0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObtainCalibFramesViewController.h; sourceTree = "<group>"; };
 		0EC6880319E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObtainCalibFramesViewController.mm; sourceTree = "<group>"; };
@@ -91,10 +92,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E80822119E51C9500F83683 /* opencv2.framework in Frameworks */,
+				0E2E7C981A2FB8AF00710CBC /* opencv2.framework in Frameworks */,
 				0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */,
 				0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */,
 				0E71696019E495B6000AD0A4 /* CoreVideo.framework in Frameworks */,
+				0E2E7C9A1A2FBAFB00710CBC /* AssetsLibrary.framework in Frameworks */,
 				0E71695919E49589000AD0A4 /* AVFoundation.framework in Frameworks */,
 				0E71695A19E49589000AD0A4 /* AVKit.framework in Frameworks */,
 				0E71694719E487C5000AD0A4 /* CoreGraphics.framework in Frameworks */,
@@ -116,13 +118,13 @@
 		0E71691019E486B0000AD0A4 = {
 			isa = PBXGroup;
 			children = (
-				0E80822019E51C9500F83683 /* opencv2.framework */,
+				0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */,
+				0E2E7C971A2FB8AF00710CBC /* opencv2.framework */,
 				0E71695B19E495B6000AD0A4 /* CoreImage.framework */,
 				0E71695C19E495B6000AD0A4 /* CoreMedia.framework */,
 				0E71695D19E495B6000AD0A4 /* CoreVideo.framework */,
 				0E71695719E49589000AD0A4 /* AVFoundation.framework */,
 				0E71695819E49589000AD0A4 /* AVKit.framework */,
-				0E71694A19E487F6000AD0A4 /* OpenCVGameFirst-Prefix.pch */,
 				0E71694419E487C5000AD0A4 /* CoreGraphics.framework */,
 				0E71694519E487C5000AD0A4 /* Foundation.framework */,
 				0E71694619E487C5000AD0A4 /* UIKit.framework */,
@@ -162,6 +164,7 @@
 		0E71691C19E486B0000AD0A4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0E71694A19E487F6000AD0A4 /* OpenCVGameFirst-Prefix.pch */,
 				0E71691D19E486B0000AD0A4 /* Info.plist */,
 				0E71691E19E486B0000AD0A4 /* main.m */,
 			);
@@ -204,7 +207,7 @@
 				0E2E7C911A2F3D4C00710CBC /* DOJOPreviewView.h */,
 				0E2E7C921A2F3D4C00710CBC /* DOJOPreviewView.m */,
 				0E2E7C8E1A2F3AA900710CBC /* DOJOCameraViewController.h */,
-				0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.m */,
+				0E2E7C8F1A2F3AA900710CBC /* DOJOCameraViewController.mm */,
 				0EFCBEF31A073EE600FA90BB /* VideoFeedCalibrate.h */,
 				0EFCBEF41A073EE600FA90BB /* VideoFeedCalibrate.mm */,
 				0EC6880219E61A8C00E17BA9 /* ObtainCalibFramesViewController.h */,
@@ -324,9 +327,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E2E7C941A2F417400710CBC /* OpenCVGameFirst-Prefix.pch in Sources */,
 				0E71692219E486B0000AD0A4 /* AppDelegate.m in Sources */,
-				0E2E7C901A2F3AA900710CBC /* DOJOCameraViewController.m in Sources */,
+				0E2E7C901A2F3AA900710CBC /* DOJOCameraViewController.mm in Sources */,
 				0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */,
 				0E71695619E492DA000AD0A4 /* VideoFeed.mm in Sources */,
 				0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */,
@@ -460,10 +462,10 @@
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
 					/Users/mikezucc/Documents/iosclass,
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					opencv2/include,
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
@@ -481,10 +483,10 @@
 					"$(inherited)",
 					/Users/mikezucc/Downloads,
 					/Users/mikezucc/Documents/iosclass,
+					"$(PROJECT_DIR)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					opencv2/include,
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = OpenCVGameFirst/Info.plist;
