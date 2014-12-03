@@ -23,7 +23,6 @@
                                 </state>
                                 <connections>
                                     <action selector="obtainCalibration:" destination="WMu-p5-foz" eventType="touchUpInside" id="0Mj-Xz-kuD"/>
-                                    <segue destination="tr5-aL-n9V" kind="modal" id="7kf-1x-Lfq"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qS6-eg-uT7">
@@ -174,24 +173,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VsG-js-xhG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-349" y="1668"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="csK-9D-fen">
-            <objects>
-                <viewController id="tr5-aL-n9V" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="u1L-uP-I5Y"/>
-                        <viewControllerLayoutGuide type="bottom" id="qAC-wf-WpW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Rdf-Hj-nYq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jaB-ym-YVK" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="123.2" y="983.5866666666667"/>
         </scene>
         <!--First View Controller-->
         <scene sceneID="ufC-wZ-h7g">

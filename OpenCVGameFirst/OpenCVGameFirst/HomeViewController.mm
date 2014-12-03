@@ -67,7 +67,59 @@ double rmsForField;
 
 -(IBAction)obtainCalibration:(id)sender
 {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"calibrationImages.plist"]];
+    NSFileManager *fMan = [NSFileManager defaultManager];
+    NSMutableArray *listOfCalibrationImages = [[NSMutableArray alloc] init];
+    if ([fMan fileExistsAtPath:picStoragePath.path])
+    {
+        listOfCalibrationImages = [[NSMutableArray alloc] initWithContentsOfFile:picStoragePath.path];
+        NSLog(@"list of calib images contains %@",listOfCalibrationImages);
+        numberOfImagesField.text = [NSString stringWithFormat:@"%ld",(long) listOfCalibrationImages.count];
+        vector<String> tempList;
+        for (int i=0; i<listOfCalibrationImages.count;i++)
+        {
+            String convString = [(NSString *)[listOfCalibrationImages objectAtIndex:i] UTF8String];
+            tempList.push_back(convString);
+        }
+        NSLog(@"beginning calibration");
+        runCalib(tempList);
+        NSLog(@"returned to calling thread");
+        rmsField.text = [NSString stringWithFormat:@"%f",(float)rmsForField];
+    }
+    else
+    {
+        // do nothing
+        rmsField.text = @"nothing calibrated yet";
+    }
+}
+
+- (cv::Mat)toCVMatFromRGB:(UIImage*)image
+{
+    // (1) Get image dimensions
+    CGFloat cols = image.size.width;
+    CGFloat rows = image.size.height;
+    NSLog(@"imageDims are %f x %f",cols, rows);
     
+    // (2) Create OpenCV image container, 8 bits per component, 4 channels
+    cv::Mat cvMat(rows, cols, CV_8UC3);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    // (3) Create CG context and draw the image
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+                                                    cols,
+                                                    rows,
+                                                    CGImageGetBitsPerComponent(image.CGImage),
+                                                    764,
+                                                    rgbColorSpace,
+                                                    CGImageGetBitmapInfo(image.CGImage));
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(contextRef);
+    
+    // (4) Return OpenCV image container reference
+    return cvMat;
 }
 
 #ifdef __cplusplus
@@ -81,6 +133,8 @@ static double computeReprojectionErrors(const vector<vector<Point3f> >& objectPo
     int i, totalPoints = 0;
     double totalErr = 0, err;
     perViewErrors.resize(objectPoints.size());
+    
+    NSLog(@"preparing error calculation");
     
     for (i = 0; i < (int)objectPoints.size(); ++i)
     {
@@ -102,7 +156,42 @@ static void saveCameraParams(Mat& cameraMatrix, Mat& distCoeffs)
     FileStorage fs("cameraParams.xml", FileStorage::WRITE);
     fs << "Camera_Matrix" << cameraMatrix;
     fs << "Distortion_Coefficients" << distCoeffs;
+    NSLog(@"wrote camera params");
+    fs.release();
 }
+
+Mat loadACalibrationImage(String filepath)
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePathNS = [NSString stringWithUTF8String:filepath.c_str()];
+    NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:filePathNS]];
+    NSLog(@"pic storage path is %@",picStoragePath);
+    UIImage *nsImage = [[UIImage alloc] initWithContentsOfFile:picStoragePath.path];
+    // (1) Get image dimensions
+    CGFloat cols = nsImage.size.width;
+    CGFloat rows = nsImage.size.height;
+    NSLog(@"imageDims are %f x %f",cols, rows);
+    
+    // (2) Create OpenCV image container, 8 bits per component, 4 channels
+    cv::Mat cvMat(rows, cols, CV_8UC4);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    // (3) Create CG context and draw the image
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+                                                    cols,
+                                                    rows,
+                                                    CGImageGetBitsPerComponent(nsImage.CGImage),
+                                                    1920,
+                                                    rgbColorSpace,
+                                                    CGImageGetBitmapInfo(nsImage.CGImage));
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), nsImage.CGImage);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(contextRef);
+
+    return cvMat;
+}
+
 
 void runCalib(vector<String> listOfPicLocations)
 {
@@ -126,11 +215,19 @@ void runCalib(vector<String> listOfPicLocations)
     double rms;
     vector<double>rmsArr;
     
-    while (1) {
+    while (photoNum < listOfPicLocations.size()) {
         if (photoNum == (widthInp * heightInp)) break;
-        string imageName = "./images/" + to_string(photoNum) + ".jpg";
-        imgMat = imread(imageName, 1);
-        if (!imgMat.data) break;
+        NSLog(@"processing image %ld",(long)photoNum);
+        string filepath = listOfPicLocations[photoNum];
+        imgMat = loadACalibrationImage(filepath);
+        if (!imgMat.data)
+        {
+            break;
+        }
+        else
+        {
+            NSLog(@"image loaded correctly");
+        }
         if (findChessboardCorners(imgMat, cv::Size(5, 4), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
         {
             imgPoints.push_back(corners);
@@ -147,17 +244,20 @@ void runCalib(vector<String> listOfPicLocations)
     objPoints.resize(imgPoints.size(), objPoints[0]);
     
     rms = calibrateCamera(objPoints, imgPoints, cv::Size(640, 480), cameraMatrix, distCoeffs, rvecs, tvecs, 0, TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON));
+    NSLog(@"rms is %f",(float)rms);
     //Mat copyctn;
     rmsArr.push_back(rms);
     
     double totalAvgErr = computeReprojectionErrors(objPoints, imgPoints, rvecs, tvecs, cameraMatrix, distCoeffs, reprojErrs);
     
     rmsForField = totalAvgErr;
+    NSLog(@"total Average Error: %f",(float)totalAvgErr);
     
     saveCameraParams(cameraMatrix, distCoeffs);
     
 }
 #endif
+
 
 /*
 #pragma mark - Navigation
