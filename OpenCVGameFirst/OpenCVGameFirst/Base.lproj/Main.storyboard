@@ -16,20 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn5-bi-Y0L">
-                                <rect key="frame" x="80" y="172" width="161" height="30"/>
-                                <state key="normal" title="Obtain Calibration Data">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="obtainCalibration:" destination="WMu-p5-foz" eventType="touchUpInside" id="0Mj-Xz-kuD"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qS6-eg-uT7">
-                                <rect key="frame" x="171" y="206" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NSI-91-0EA">
                                 <rect key="frame" x="69" y="28" width="183" height="30"/>
                                 <state key="normal" title="Record Calibration Images">
@@ -50,26 +36,40 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfE-L1-Va4">
+                                <rect key="frame" x="97" y="95" width="127" height="30"/>
+                                <state key="normal" title="clear Calib Images">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn5-bi-Y0L">
+                                <rect key="frame" x="80" y="133" width="161" height="30"/>
+                                <state key="normal" title="Obtain Calibration Data">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="obtainCalibration:" destination="WMu-p5-foz" eventType="touchUpInside" id="0Mj-Xz-kuD"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qS6-eg-uT7">
+                                <rect key="frame" x="171" y="167" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="rms:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Deo-fM-MWR">
-                                <rect key="frame" x="129" y="210" width="34" height="21"/>
+                                <rect key="frame" x="129" y="171" width="34" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtS-yz-Beo">
-                                <rect key="frame" x="111" y="255" width="99" height="30"/>
+                                <rect key="frame" x="111" y="216" width="99" height="30"/>
                                 <state key="normal" title="POSE ESTIM8">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <segue destination="vXZ-lx-hvc" kind="modal" id="qpF-UA-XXx"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfE-L1-Va4">
-                                <rect key="frame" x="97" y="95" width="127" height="30"/>
-                                <state key="normal" title="clear Calib Images">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -86,10 +86,10 @@
             </objects>
             <point key="canvasLocation" x="164.80000000000001" y="196.90666666666667"/>
         </scene>
-        <!--Obtain Calib Frames View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="9iz-rI-uUk">
             <objects>
-                <viewController id="o8q-60-vD4" customClass="ObtainCalibFramesViewController" sceneMemberID="viewController">
+                <viewController id="o8q-60-vD4" customClass="DOJOCameraViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="YEm-er-SUm"/>
                         <viewControllerLayoutGuide type="bottom" id="50d-q4-jOO"/>
@@ -104,7 +104,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="snapStillImage:" destination="o8q-60-vD4" eventType="touchUpInside" id="sKX-HZ-WZ5"/>
+                                    <action selector="snapStillImage:" destination="o8q-60-vD4" eventType="touchUpInside" id="yy4-eF-YkC"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VGc-21-cJb">
@@ -113,7 +113,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="closeMe" destination="o8q-60-vD4" eventType="touchUpInside" id="kEx-cA-kJi"/>
+                                    <action selector="removeYoself:" destination="o8q-60-vD4" eventType="touchUpInside" id="hzH-rE-e4B"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -124,13 +124,17 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="previewView" destination="vDu-NI-6mc" id="iqD-l6-fCP"/>
-                        <outlet property="stillButton" destination="qas-9I-jWf" id="fLc-YY-2pk"/>
+                        <outlet property="previewView" destination="vDu-NI-6mc" id="jCe-jl-oBm"/>
+                        <outlet property="stillButton" destination="qas-9I-jWf" id="l8w-33-9hv"/>
                         <segue destination="wVw-Ku-4xw" kind="modal" identifier="toVerifyController" id="7ro-yG-4m4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L5Y-mx-tUC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="rse-ip-7Vm"/>
+                <tapGestureRecognizer id="rse-ip-7Vm">
+                    <connections>
+                        <action selector="focusAndExposeTap:" destination="o8q-60-vD4" id="SB8-PZ-HSv"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-348.80000000000001" y="968.43999999999994"/>
         </scene>

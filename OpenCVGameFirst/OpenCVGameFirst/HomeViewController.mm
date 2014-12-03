@@ -26,6 +26,9 @@ using namespace std;
 
 double rmsForField;
 
+Mat cameraMatrixGlobal;
+Mat distortionCoeffGlobal;
+
 @interface HomeViewController ()
 
 // Session management.
@@ -65,7 +68,7 @@ double rmsForField;
         // do nothing
         numberOfImagesField.text = @"0";
     }
-    chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(40, 260, 240, 240)];
+    chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(0, 260, self.view.frame.size.width, self.view.frame.size.height-260)];
     chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:chessboardDisplay];
 
@@ -166,9 +169,13 @@ static double computeReprojectionErrors(const vector<vector<Point3f> >& objectPo
 
 static void saveCameraParams(Mat& cameraMatrix, Mat& distCoeffs)
 {
-    FileStorage fs("cameraParams.xml", FileStorage::WRITE);
+    FileStorage fs;
+    fs.open("cameraParams.xml", FileStorage::WRITE);
     fs << "Camera_Matrix" << cameraMatrix;
+    cameraMatrixGlobal = cameraMatrix.clone();
     fs << "Distortion_Coefficients" << distCoeffs;
+    distortionCoeffGlobal = distCoeffs.clone();
+    cout << distCoeffs;
     NSLog(@"wrote camera params");
     fs.release();
 }

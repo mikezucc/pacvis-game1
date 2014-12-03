@@ -22,6 +22,7 @@
 #import "opencv2/ml.hpp"
 
 using namespace cv;
+using namespace std;
 
 @interface ObtainCalibFramesViewController ()
 
