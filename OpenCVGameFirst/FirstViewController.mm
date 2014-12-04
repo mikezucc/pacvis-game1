@@ -183,7 +183,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             NSLog(@"not solved");
         }
         
-        //projectPoints(initialFrame, rvec, tvec, cameraMatrix, distCoeffs, transformedFrame, noArray(), 0);
+        projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
         //transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         //warpPerspective(testImage, outputImage, transfMat, outputImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
     }
