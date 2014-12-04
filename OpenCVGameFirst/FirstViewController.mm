@@ -65,6 +65,7 @@ Mat rvec, tvec;
     
     UIImage *testface = [UIImage imageNamed:@"face.png"];
     testImage = [self toCVMatFromRGBWithAlpha:testface];
+    cout << "testImage: " << testImage.rows << endl;
     
     self.videoSource = [[VideoFeed alloc] init];
     self.videoSource.delegate = self;
@@ -184,11 +185,12 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         }
         
         projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
-        //transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
-        //warpPerspective(testImage, outputImage, transfMat, outputImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
+        transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
+        warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
+        
     }
     cout << "query frame" << endl;
-    return inputFrame;
+    return testImage;
 }
 #endif
 
