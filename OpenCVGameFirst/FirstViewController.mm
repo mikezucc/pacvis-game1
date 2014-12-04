@@ -76,8 +76,8 @@ cv::Mat distortionCoeffFirstVC;
     cameraMatrixFirstVC = self.cameraMatrixProperty;
     distortionCoeffFirstVC = self.distortionCoeffProperty;
     
-    UIImage *testface = [UIImage imageNamed:@"testface.jpg"];
-    testImage = [self toCVMatFromRGB:testface];
+    //UIImage *testface = [UIImage imageNamed:@"testface.jpg"];
+    //testImage = [self toCVMatFromRGB:testface];
     
     self.videoSource = [[VideoFeed alloc] init];
     self.videoSource.delegate = self;
@@ -109,21 +109,37 @@ cv::Mat distortionCoeffFirstVC;
 - (void)frameReady:(uint8_t *)frameAddress {
     NSLog(@"delegate called on FIRST VIEW");
     cv::Mat holder = cv::Mat((int)640,(int)480,CV_8UC4,frameAddress);
-    cv::Mat image = holder.clone();
+    cv::Mat image;
+    holder.copyTo(image);
+    holder.release();
+    cout << "frame dims is: " << holder.rows << " by " << holder.cols << endl;
+    cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
+    image.copyTo(imageCopyLocal);
+    imageCopyLocal = performPoseAndPosition(imageCopyLocal);
+    cout << "row size: " << imageCopyLocal.rows << endl;
+    UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
+    imageCopyLocal.release();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"updating with image %ld",(long)convImg.size.width);
+        [[self backgroundImageView] setImage:convImg];
+    });
+    /*
     dispatch_async( displaySerializer, ^{
-        cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
+        cout << "frame dims is: " << holder.rows << " by " << holder.cols << endl;
         cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
         image.copyTo(imageCopyLocal);
-        //outputImage = performPoseAndPosition(frame);
+        imageCopyLocal = performPoseAndPosition(imageCopyLocal);
         cout << "row size: " << imageCopyLocal.rows << endl;
         UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
-        
+        imageCopyLocal.release();
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"updating with image %ld",(long)convImg.size.width);
             [[self backgroundImageView] setImage:convImg];
         });
         //[[_weakSelf backgroundImageView] setNeedsDisplay];
     });
+     */
+    //holder.release();
 }
 
 
@@ -139,7 +155,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     {
         drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
         //calibrateCamera()
-        bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false);
+        /*bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false);
         if (solved)
         {
             NSLog(@"solved");
@@ -148,7 +164,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         {
             NSLog(@"not solved");
         }
-        
+        */
         //projectPoints(initialFrame, rvec, tvec, cameraMatrix, distCoeffs, transformedFrame, noArray(), 0);
         //transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         //warpPerspective(testImage, outputImage, transfMat, outputImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
