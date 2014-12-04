@@ -187,10 +187,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
         transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
-        
+        circle(inputFrame, transformedFrame[3],10,Scalar(0,0,255),5,-1);
     }
     cout << "query frame" << endl;
-    return testImage;
+    return inputFrame;
 }
 #endif
 
