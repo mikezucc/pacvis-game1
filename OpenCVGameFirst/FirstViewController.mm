@@ -24,6 +24,9 @@
 using namespace cv;
 using namespace std;
 
+cv::Mat cameraMatrixFirstVC;
+cv::Mat distortionCoeffFirstVC;
+
 Mat testImage;
 cv::Size boardSize(5, 4);
 vector<Point2f> corners;
@@ -35,8 +38,7 @@ vector<Point2f> transformedFrame;
 vector<Point3f> objPoints;
 Mat transfMat;
 Mat rvec, tvec;
-cv::Mat cameraMatrixFirstVC;
-cv::Mat distortionCoeffFirstVC;
+ 
 
 @interface FirstViewController () <VideoSourceDelegate>
 
@@ -53,28 +55,13 @@ cv::Mat distortionCoeffFirstVC;
     [super viewDidLoad];
     
     displaySerializer = dispatch_queue_create("com.ocvGame.displayThread", DISPATCH_QUEUE_SERIAL);
-    
-    imageFrame.push_back(Point2f(400, 0));
-    imageFrame.push_back(Point2f(400, 400));
-    imageFrame.push_back(Point2f(0, 0));
-    imageFrame.push_back(Point2f(0, 400));
-    initialFrame.push_back(Point3f(400, 0, 0));
-    initialFrame.push_back(Point3f(400, 0, 400));
-    initialFrame.push_back(Point3f(0, 0, 0));
-    initialFrame.push_back(Point3f(0, 0, 400));
-    initialFrame.resize(4, initialFrame[0]);
-    
-    for (int i = 0; i < boardSize.height; ++i)
-        for (int j = 0; j < boardSize.width; ++j)
-            objPoints.push_back(Point3f(float(j * 1), float(i * 1), 0));
-    
-    objPoints.resize(imgPoints.size(), objPoints[0]);
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     cameraMatrixFirstVC = self.cameraMatrixProperty;
     distortionCoeffFirstVC = self.distortionCoeffProperty;
+    cout << "camera matrix global: " << cameraMatrixFirstVC << endl;
     
     //UIImage *testface = [UIImage imageNamed:@"testface.jpg"];
     //testImage = [self toCVMatFromRGB:testface];
@@ -112,7 +99,7 @@ cv::Mat distortionCoeffFirstVC;
     cv::Mat image;
     holder.copyTo(image);
     holder.release();
-    cout << "frame dims is: " << holder.rows << " by " << holder.cols << endl;
+    cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
     cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
     image.copyTo(imageCopyLocal);
     imageCopyLocal = performPoseAndPosition(imageCopyLocal);
@@ -149,13 +136,32 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     cout << "open capture" << endl;
     //outputImage = Mat(testImage.size(), CV_8UC3);
     
+    cout << "objPoint size: " << objPoints.size() << endl;
+    imageFrame.push_back(Point2f(400, 0));
+    imageFrame.push_back(Point2f(400, 400));
+    imageFrame.push_back(Point2f(0, 0));
+    imageFrame.push_back(Point2f(0, 400));
+    initialFrame.push_back(Point3f(400, 0, 0));
+    initialFrame.push_back(Point3f(400, 0, 400));
+    initialFrame.push_back(Point3f(0, 0, 0));
+    initialFrame.push_back(Point3f(0, 0, 400));
+    initialFrame.resize(4, initialFrame[0]);
+    
+    for (int i = 0; i < boardSize.height; ++i)
+        for (int j = 0; j < boardSize.width; ++j)
+            objPoints.push_back(Point3f(float(j * 1), float(i * 1), 0));
+    
+    //objPoints.resize(imgPoints.size(), objPoints[0]);
+    
     cout << "start while" << endl;
     //cv::Mat imgmat = inputFrame.clone();
     if (findChessboardCorners(inputFrame, cv::Size(5, 4), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
     {
         drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
         //calibrateCamera()
-        /*bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false);
+        cout << "obj points is " << objPoints << endl;
+        cout << "distortion firstVC" << distortionCoeffFirstVC << endl;
+        bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false);
         if (solved)
         {
             NSLog(@"solved");
@@ -164,7 +170,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         {
             NSLog(@"not solved");
         }
-        */
+        
         //projectPoints(initialFrame, rvec, tvec, cameraMatrix, distCoeffs, transformedFrame, noArray(), 0);
         //transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         //warpPerspective(testImage, outputImage, transfMat, outputImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);

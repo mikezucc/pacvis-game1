@@ -358,8 +358,10 @@ Mat loadACalibrationImage(String filepath)
     // Pass the selected object to the new view controller.
     if ([[segue identifier] isEqualToString:@"topos8"])
     {
+        _firstVC = (FirstViewController *)[segue destinationViewController];
         _firstVC.cameraMatrixProperty = cameraMatrixGlobal;
         _firstVC.distortionCoeffProperty = distortionCoeffGlobal;
+        cout << "distort from firstVC is: " << cameraMatrixGlobal.rows << endl;
     }
 }
 

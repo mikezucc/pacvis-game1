@@ -10,7 +10,10 @@
 #import "VideoFeed.h"
 
 @interface FirstViewController : UIViewController
-
+{
+    cv::Mat cameraMatrixProperty;
+    cv::Mat distortionCoeffProperty;
+}
 @property cv::Mat cameraMatrixProperty;
 @property cv::Mat distortionCoeffProperty;
 
