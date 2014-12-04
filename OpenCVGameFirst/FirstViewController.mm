@@ -63,8 +63,8 @@ Mat rvec, tvec;
     distortionCoeffFirstVC = self.distortionCoeffProperty;
     cout << "camera matrix global: " << cameraMatrixFirstVC << endl;
     
-    //UIImage *testface = [UIImage imageNamed:@"testface.jpg"];
-    //testImage = [self toCVMatFromRGB:testface];
+    UIImage *testface = [UIImage imageNamed:@"face.png"];
+    testImage = [self toCVMatFromRGBWithAlpha:testface];
     
     self.videoSource = [[VideoFeed alloc] init];
     self.videoSource.delegate = self;
@@ -136,21 +136,33 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     cout << "open capture" << endl;
     //outputImage = Mat(testImage.size(), CV_8UC3);
     
-    cout << "objPoint size: " << objPoints.size() << endl;
-    imageFrame.push_back(Point2f(400, 0));
-    imageFrame.push_back(Point2f(400, 400));
-    imageFrame.push_back(Point2f(0, 0));
-    imageFrame.push_back(Point2f(0, 400));
-    initialFrame.push_back(Point3f(400, 0, 0));
-    initialFrame.push_back(Point3f(400, 0, 400));
-    initialFrame.push_back(Point3f(0, 0, 0));
-    initialFrame.push_back(Point3f(0, 0, 400));
-    initialFrame.resize(4, initialFrame[0]);
+    if (imageFrame.size() != 4)
+    {
+        imageFrame.push_back(Point2f(400, 0));
+        imageFrame.push_back(Point2f(400, 400));
+        imageFrame.push_back(Point2f(0, 0));
+        imageFrame.push_back(Point2f(0, 400));
+        initialFrame.push_back(Point3f(400, 0, 0));
+        initialFrame.push_back(Point3f(400, 0, 400));
+        initialFrame.push_back(Point3f(0, 0, 0));
+        initialFrame.push_back(Point3f(0, 0, 400));
+        initialFrame.resize(4, initialFrame[0]);
+    }
     
-    for (int i = 0; i < boardSize.height; ++i)
-        for (int j = 0; j < boardSize.width; ++j)
-            objPoints.push_back(Point3f(float(j * 1), float(i * 1), 0));
+    if (objPoints.size() != 20)
+    {
+        for (int i = 0; i < boardSize.height; ++i)
+        {
+            for (int j = 0; j < boardSize.width; ++j)
+            {
+                objPoints.push_back(Point3f(float(j * 1), float(i * 1), 0));
+            }
+        }
+    }
     
+    rvec.release();
+    tvec.release();
+    corners.clear();
     //objPoints.resize(imgPoints.size(), objPoints[0]);
     
     cout << "start while" << endl;
@@ -161,7 +173,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         //calibrateCamera()
         cout << "obj points is " << objPoints << endl;
         cout << "distortion firstVC" << distortionCoeffFirstVC << endl;
-        bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false);
+        bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
         if (solved)
         {
             NSLog(@"solved");
@@ -245,6 +257,33 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     
     // (6) Return the UIImage instance
     return finalImage;
+}
+
+- (cv::Mat)toCVMatFromRGBWithAlpha:(UIImage*)image
+{
+    // (1) Get image dimensions
+    CGFloat cols = image.size.width;
+    CGFloat rows = image.size.height;
+    NSLog(@"imageDims are %f x %f",cols, rows);
+    
+    // (2) Create OpenCV image container, 8 bits per component, 4 channels
+    cv::Mat cvMat(rows, cols, CV_8UC3);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    // (3) Create CG context and draw the image
+    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+                                                    cols,
+                                                    rows,
+                                                    CGImageGetBitsPerComponent(image.CGImage),
+                                                    764,
+                                                    rgbColorSpace,
+                                                    kCGImageAlphaLast);
+    
+    CGContextDrawImage(contextRef, CGRectMake(0, 0, cols, rows), image.CGImage);
+    CGColorSpaceRelease(rgbColorSpace);
+    CGContextRelease(contextRef);
+    
+    // (4) Return OpenCV image container reference
+    return cvMat;
 }
 
 /*

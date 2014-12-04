@@ -74,6 +74,8 @@ Mat distortionCoeffGlobal;
     chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(0, 260, self.view.frame.size.width, self.view.frame.size.height-260)];
     chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:chessboardDisplay];
+    
+    [poseEstim8 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
 -(IBAction)obtainCalibration:(id)sender
@@ -107,6 +109,7 @@ Mat distortionCoeffGlobal;
                     NSLog(@"finished run Calib, displaying params");
                     cout << endl << "cameraMatrix Global:\n" << cameraMatrixGlobal << endl;
                     cout << endl << "distortionMatrix Global:\n" << distortionCoeffGlobal << endl;
+                    [poseEstim8 setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
                 });
             });
         });
@@ -116,7 +119,7 @@ Mat distortionCoeffGlobal;
     else
     {
         // do nothing
-        rmsField.text = @"nothing calibrated yet";
+        rmsField.text = @"no pictures collected yet";
     }
 }
 
