@@ -8,6 +8,7 @@
 
 #import "VideoFeed.h"
 using namespace cv;
+using namespace std;
 
 cv::Mat testfaceMat;
 
@@ -43,7 +44,7 @@ struct CvPoint2D32f {
         _captureSession = captureSession;
         doge = [UIImage imageNamed:@"testface.jpg"];
         //NSLog(@"testface is %@",doge);
-        testfaceMat = [self toCVMatFromRGB:doge];
+        //testfaceMat = [self toCVMatFromRGB:doge];
         NSLog(@"post mat conversion");
     }
     return self;
@@ -145,14 +146,15 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     size_t width = CVPixelBufferGetWidth(imageBuffer);
     size_t height = CVPixelBufferGetHeight(imageBuffer);
     size_t stride = CVPixelBufferGetBytesPerRow(imageBuffer);
+    cout << "stride is: " << stride << endl;
     //struct VideoFrame frame = {width, height, stride, baseAddress};
-    cv::Mat image = cv::Mat((int)height,(int)width,CV_8UC4,baseAddress);
+    //cv::Mat image = cv::Mat((int)height,(int)width,CV_8UC4,baseAddress);
     
     // (4) Dispatch VideoFrame to VideoSource delegate
     
-    [self processImage:image];
-    
-    [self.delegate frameReady:image];
+    //[self processImage:image];
+    NSLog(@"frame ready");
+    [self.delegate frameReady:baseAddress];
     
     // (5) Unlock pixel buffer
     CVPixelBufferUnlockBaseAddress(imageBuffer, 0);

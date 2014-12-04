@@ -30,7 +30,7 @@
 @protocol VideoSourceDelegate <NSObject>
 
 @required
-- (void)frameReady:(const cv::Mat &)frame;
+- (void)frameReady:(uint8_t *)frameAddress;
 
 @end
 

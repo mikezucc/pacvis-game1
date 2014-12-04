@@ -11,8 +11,11 @@
 
 @interface FirstViewController : UIViewController
 
+@property (nonatomic) cv::Mat cameraMatrixProperty;
+@property (nonatomic) cv::Mat distortionCoeffProperty;
+
 @property (nonatomic, strong) VideoFeed *videoSource;
-@property (nonatomic, strong) IBOutlet UIImageView *backgroundImageView;
+@property (nonatomic, strong) UIImageView *backgroundImageView;
 
 @property (nonatomic, strong) IBOutlet UIButton *closeThisView;
 

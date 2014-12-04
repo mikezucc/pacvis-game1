@@ -68,7 +68,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="vXZ-lx-hvc" kind="modal" id="qpF-UA-XXx"/>
+                                    <segue destination="vXZ-lx-hvc" kind="modal" identifier="topos8" id="qpF-UA-XXx"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -196,25 +196,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egT-cP-duq">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="euw-70-Fnl">
                                 <rect key="frame" x="16" y="20" width="37" height="30"/>
                                 <state key="normal" title="close">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="closeMe" destination="vXZ-lx-hvc" eventType="touchUpInside" id="PSm-5G-sBY"/>
+                                    <action selector="closeMe" destination="vXZ-lx-hvc" eventType="touchUpInside" id="icm-WM-pPe"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="closeThisView" destination="egT-cP-duq" id="oKw-GT-cHU"/>
+                        <outlet property="closeThisView" destination="euw-70-Fnl" id="KQ7-nl-EdX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="617.60000000000002" y="983.5866666666667"/>
+            <point key="canvasLocation" x="617" y="983"/>
         </scene>
     </scenes>
     <resources>

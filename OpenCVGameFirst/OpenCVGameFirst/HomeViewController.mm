@@ -21,6 +21,8 @@
 #import "opencv2/highgui.hpp"
 #import "opencv2/ml.hpp"
 
+#import "FirstViewController.h"
+
 using namespace cv;
 using namespace std;
 
@@ -33,6 +35,7 @@ Mat distortionCoeffGlobal;
 
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue;
+@property FirstViewController *firstVC;
 
 @end
 
@@ -71,7 +74,6 @@ Mat distortionCoeffGlobal;
     chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(0, 260, self.view.frame.size.width, self.view.frame.size.height-260)];
     chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
     [self.view addSubview:chessboardDisplay];
-
 }
 
 -(IBAction)obtainCalibration:(id)sender
@@ -347,14 +349,19 @@ Mat loadACalibrationImage(String filepath)
 
 
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([[segue identifier] isEqualToString:@"topos8"])
+    {
+        _firstVC.cameraMatrixProperty = cameraMatrixGlobal;
+        _firstVC.distortionCoeffProperty = distortionCoeffGlobal;
+    }
 }
-*/
+
 
 @end
