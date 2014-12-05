@@ -78,6 +78,35 @@ Mat distortionCoeffGlobal;
     [poseEstim8 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
+-(IBAction)clearCalibrationImages:(id)sender
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"calibrationImages.plist"]];
+    NSFileManager *fMan = [NSFileManager defaultManager];
+    NSMutableArray *listOfCalibrationImages = [[NSMutableArray alloc] init];
+    if ([fMan fileExistsAtPath:picStoragePath.path])
+    {
+        listOfCalibrationImages = [[NSMutableArray alloc] initWithContentsOfFile:picStoragePath.path];
+        NSLog(@"list of calib images contains %@",listOfCalibrationImages);
+        NSError *error;
+        for (int i=0; i<listOfCalibrationImages.count;i++)
+        {
+            NSURL *picture = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpeg",[listOfCalibrationImages objectAtIndex:i]]]];
+            [fMan removeItemAtURL:picture error:&error];
+            rmsField.text = @"cleaning";
+        }
+        listOfCalibrationImages = [[NSMutableArray alloc] init];
+        [listOfCalibrationImages writeToURL:picStoragePath atomically:YES];
+        rmsField.text = @"cleaned";
+    }
+    else
+    {
+        // do nothing
+        rmsField.text = @"no images yet";
+    }
+}
+
 -(IBAction)obtainCalibration:(id)sender
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
