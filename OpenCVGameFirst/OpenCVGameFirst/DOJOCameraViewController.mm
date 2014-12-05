@@ -24,6 +24,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 @property (nonatomic, weak) IBOutlet UIButton *recordButton;
 @property (nonatomic, weak) IBOutlet UIButton *cameraButton;
 @property (nonatomic, weak) IBOutlet UIButton *stillButton;
+@property (nonatomic, weak) IBOutlet UIButton *focusAndLock;
 
 - (IBAction)toggleMovieRecording:(id)sender;
 - (IBAction)changeCamera:(id)sender;
@@ -57,7 +58,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 
 @implementation DOJOCameraViewController
 
-@synthesize cameraButton,recordButton,stillButton, obtainController, imageData, mediaType, originalImage, videoData, didRun, viewDidLoadAlready;
+@synthesize cameraButton,recordButton,stillButton, obtainController, imageData, mediaType, originalImage, videoData, didRun, viewDidLoadAlready, focusAndLock;
 
 
 //@synthesize session;
@@ -531,6 +532,12 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     });
 }
 
+-(IBAction)focusAndLock:(id)sender
+{
+    [[[self videoDeviceInput] device] setExposureMode:AVCaptureExposureModeLocked];
+    [[[self videoDeviceInput] device] setFocusMode:AVCaptureFocusModeLocked];
+}
+
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
@@ -540,7 +547,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 - (void)subjectAreaDidChange:(NSNotification *)notification
 {
     CGPoint devicePoint = CGPointMake(.5, .5);
-    [self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
+    //[self focusWithMode:AVCaptureFocusModeContinuousAutoFocus exposeWithMode:AVCaptureExposureModeContinuousAutoExposure atDevicePoint:devicePoint monitorSubjectAreaChange:NO];
 }
 
 #pragma mark File Output Delegate

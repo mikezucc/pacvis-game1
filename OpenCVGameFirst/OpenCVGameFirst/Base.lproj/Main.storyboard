@@ -119,6 +119,15 @@
                                     <action selector="removeYoself:" destination="o8q-60-vD4" eventType="touchUpInside" id="hzH-rE-e4B"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2T0-6q-UPO">
+                                <rect key="frame" x="198" y="168" width="101" height="30"/>
+                                <state key="normal" title="focus and lock">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="focusAndLock:" destination="o8q-60-vD4" eventType="touchUpInside" id="YET-XZ-oia"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
