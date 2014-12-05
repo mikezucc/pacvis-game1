@@ -41,6 +41,9 @@
                                 <state key="normal" title="clear Calib Images">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="clearCalibrationImages:" destination="WMu-p5-foz" eventType="touchUpInside" id="j8x-Dn-Pdt"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn5-bi-Y0L">
                                 <rect key="frame" x="80" y="133" width="161" height="30"/>

@@ -94,16 +94,16 @@ Mat distortionCoeffGlobal;
         {
             NSURL *picture = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpeg",[listOfCalibrationImages objectAtIndex:i]]]];
             [fMan removeItemAtURL:picture error:&error];
-            rmsField.text = @"cleaning";
+            numberOfImagesField.text = @"cleaning";
         }
         listOfCalibrationImages = [[NSMutableArray alloc] init];
         [listOfCalibrationImages writeToURL:picStoragePath atomically:YES];
-        rmsField.text = @"cleaned";
+        numberOfImagesField.text = @"cleaned";
     }
     else
     {
         // do nothing
-        rmsField.text = @"no images yet";
+        numberOfImagesField.text = @"no images yet";
     }
 }
 
@@ -369,7 +369,7 @@ Mat loadACalibrationImage(String filepath)
     dispatch_async(sessionQueue, ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"display chessboard in nested queue");
-            [[self rmsField] setText:[NSString stringWithFormat:@"%f",(float)rmsForField]];
+            [[self rmsField] setText:[NSString stringWithFormat:@"%f",(float)rms]];
         });
     });
     NSLog(@"total Average Error: %f",(float)totalAvgErr);
