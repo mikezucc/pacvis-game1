@@ -11,6 +11,7 @@
 		0E2E7C931A2F3D4C00710CBC /* DOJOPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E2E7C921A2F3D4C00710CBC /* DOJOPreviewView.m */; };
 		0E2E7C981A2FB8AF00710CBC /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C971A2FB8AF00710CBC /* opencv2.framework */; };
 		0E2E7C9A1A2FBAFB00710CBC /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */; };
+		0E30FFA11A3303A700F34AFE /* smallface.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E30FFA01A3303A700F34AFE /* smallface.png */; };
 		0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B45111A2E949200C6AC91 /* HomeViewController.mm */; };
 		0E552FBB1A308A1600EECFDB /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E552FBA1A308A1600EECFDB /* face.png */; };
 		0E71691F19E486B0000AD0A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71691E19E486B0000AD0A4 /* main.m */; };
@@ -52,6 +53,7 @@
 		0E2E7C921A2F3D4C00710CBC /* DOJOPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DOJOPreviewView.m; sourceTree = "<group>"; };
 		0E2E7C971A2FB8AF00710CBC /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		0E30FFA01A3303A700F34AFE /* smallface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallface.png; sourceTree = SOURCE_ROOT; };
 		0E3B45101A2E949200C6AC91 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		0E3B45111A2E949200C6AC91 /* HomeViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HomeViewController.mm; sourceTree = "<group>"; };
 		0E552FBA1A308A1600EECFDB /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = SOURCE_ROOT; };
@@ -221,6 +223,7 @@
 		0EC6880E19E620B600E17BA9 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				0E30FFA01A3303A700F34AFE /* smallface.png */,
 				0E552FBA1A308A1600EECFDB /* face.png */,
 				0EC6880C19E620A400E17BA9 /* picbutton2x.png */,
 				0E80822219E5D8C100F83683 /* testface.jpg */,
@@ -310,6 +313,7 @@
 			files = (
 				0E71692819E486B0000AD0A4 /* Main.storyboard in Resources */,
 				0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */,
+				0E30FFA11A3303A700F34AFE /* smallface.png in Resources */,
 				0E552FBB1A308A1600EECFDB /* face.png in Resources */,
 				0E71692A19E486B0000AD0A4 /* Images.xcassets in Resources */,
 				0EC6880D19E620A400E17BA9 /* picbutton2x.png in Resources */,
