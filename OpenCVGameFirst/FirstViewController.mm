@@ -148,11 +148,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         initialFrame.push_back(Point3f(0, 0, -10));
         initialFrame.push_back(Point3f(10, 0, 0));
         initialFrame.push_back(Point3f(10, 0, -10));
-        /*
+        
          // THIS IS FOR A CUBE, this messes up other code
         initialFrame.push_back(Point3f(10, 10, 0));
         initialFrame.push_back(Point3f(0, 10, -10));
-         */
         //initialFrame.resize(4, initialFrame[0]);
     }
     
@@ -186,6 +185,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         {
             NSLog(@"solved");
             projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
+            /*
             transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
             warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
             int roiWidth = 0, roiHeight = 0;
@@ -231,10 +231,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             outputImage.copyTo(outputImage, maskInv);
             //cv::add(outputImage, destinationROI, destinationROI);
             inputFrame(roi) = destinationROI;
-            /*
-            cout << "roi: " << roi << endl;
-            cv::Mat destinationROI = inputFrame( roi );
-            outputImage.copyTo( destinationROI );
+            
+            //cout << "roi: " << roi << endl;
+            //cv::Mat destinationROI = inputFrame( roi );
+            //outputImage.copyTo( destinationROI );
              */
             
             
