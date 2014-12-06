@@ -70,6 +70,7 @@ struct CvPoint2D32f {
     NSMutableDictionary *focusDict = [[NSMutableDictionary alloc] initWithContentsOfURL:selectedPath];
     float val = [(NSNumber *)[focusDict valueForKey:@"focusLock"] floatValue];
     [videoDevice setFocusModeLockedWithLensPosition:val completionHandler:nil];
+    [videoDevice setExposureMode:AVCaptureExposureModeLocked];
     videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, 20);
     if ( !videoDevice ) {
         NSLog(@"Could not initialize camera at position %d", devicePosition);

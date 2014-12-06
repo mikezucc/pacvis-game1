@@ -139,14 +139,14 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     
     if (imageFrame.size() != 4)
     {
-        imageFrame.push_back(Point2f(400, 0));
-        imageFrame.push_back(Point2f(400, 400));
+        imageFrame.push_back(Point2f(20, 0));
+        imageFrame.push_back(Point2f(20, 20));
         imageFrame.push_back(Point2f(0, 0));
-        imageFrame.push_back(Point2f(0, 400));
-        initialFrame.push_back(Point3f(400, 0, 0));
-        initialFrame.push_back(Point3f(400, 0, 400));
+        imageFrame.push_back(Point2f(0, 20));
+        initialFrame.push_back(Point3f(20, 0, 0));
+        initialFrame.push_back(Point3f(20, 20, 0));
         initialFrame.push_back(Point3f(0, 0, 0));
-        initialFrame.push_back(Point3f(0, 0, 400));
+        initialFrame.push_back(Point3f(0, 20, 0));
         initialFrame.resize(4, initialFrame[0]);
     }
     
@@ -156,7 +156,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         {
             for (int j = 0; j < boardSize.width; ++j)
             {
-                objPoints.push_back(Point3f(float(j * 1), float(i * 1), 0));
+                objPoints.push_back(Point3f(float(j * 1), 0, float(i * 1)));
             }
         }
     }
@@ -172,8 +172,8 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     {
         drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
         //calibrateCamera()
-        cout << "obj points is " << objPoints << endl;
-        cout << "distortion firstVC" << distortionCoeffFirstVC << endl;
+        //cout << "obj points is " << objPoints << endl;
+        //cout << "distortion firstVC" << distortionCoeffFirstVC << endl;
         bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
         if (solved)
         {
@@ -187,9 +187,9 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
         transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
-        circle(inputFrame, transformedFrame[3],10,Scalar(0,0,255),5,-1);
+        circle(inputFrame, transformedFrame[0],10,Scalar(0,255,0),5,-1);
     }
-    cout << "query frame" << endl;
+    cout << "query frame RVEC: " << rvec << endl;
     return inputFrame;
 }
 #endif
