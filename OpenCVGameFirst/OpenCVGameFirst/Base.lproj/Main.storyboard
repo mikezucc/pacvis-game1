@@ -25,17 +25,12 @@
                                     <segue destination="o8q-60-vD4" kind="modal" id="ZV4-q1-9DQ"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="num Imgs collected:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wh-nB-rko">
-                                <rect key="frame" x="7" y="66" width="156" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Imgs:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Wh-nB-rko">
+                                <rect key="frame" x="7" y="66" width="43" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfI-Cp-hza">
-                                <rect key="frame" x="171" y="62" width="97" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gfE-L1-Va4">
                                 <rect key="frame" x="97" y="95" width="127" height="30"/>
                                 <state key="normal" title="clear Calib Images">
@@ -74,10 +69,27 @@
                                     <segue destination="vXZ-lx-hvc" kind="modal" identifier="topos8" id="qpF-UA-XXx"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qfI-Cp-hza">
+                                <rect key="frame" x="58" y="62" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="fL:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HqL-Nu-fcD">
+                                <rect key="frame" x="164" y="66" width="20" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iTX-zd-S5g">
+                                <rect key="frame" x="187" y="61" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="lensField" destination="iTX-zd-S5g" id="Wy5-e0-I7C"/>
                         <outlet property="numberOfImagesField" destination="qfI-Cp-hza" id="EUa-hj-IEf"/>
                         <outlet property="poseEstim8" destination="GtS-yz-Beo" id="dXC-8g-Pbw"/>
                         <outlet property="recordCalibImages" destination="NSI-91-0EA" id="fgE-E3-FYD"/>
@@ -102,7 +114,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qas-9I-jWf">
-                                <rect key="frame" x="140" y="426" width="121" height="66"/>
+                                <rect key="frame" x="156" y="402" width="121" height="66"/>
                                 <state key="normal" image="picbutton2x.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -120,8 +132,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2T0-6q-UPO">
-                                <rect key="frame" x="198" y="168" width="101" height="30"/>
-                                <state key="normal" title="focus and lock">
+                                <rect key="frame" x="21" y="269" width="277" height="30"/>
+                                <state key="normal" title="lock focus">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -136,6 +148,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="focusAndLock" destination="2T0-6q-UPO" id="1Zf-U7-Wr2"/>
                         <outlet property="previewView" destination="vDu-NI-6mc" id="jCe-jl-oBm"/>
                         <outlet property="stillButton" destination="qas-9I-jWf" id="l8w-33-9hv"/>
                         <segue destination="wVw-Ku-4xw" kind="modal" identifier="toVerifyController" id="7ro-yG-4m4"/>
@@ -148,7 +161,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-348.80000000000001" y="968.43999999999994"/>
+            <point key="canvasLocation" x="-349" y="968"/>
         </scene>
         <!--Obtain Calib Frames View Controller-->
         <scene sceneID="J9w-7P-QDK">

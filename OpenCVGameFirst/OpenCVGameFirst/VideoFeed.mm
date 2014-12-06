@@ -64,6 +64,12 @@ struct CvPoint2D32f {
     // (1) Find camera device at the specific position
     AVCaptureDevice * videoDevice = [self cameraWithPosition:devicePosition];
     [videoDevice lockForConfiguration:nil];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSURL *selectedPath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"focusData.plist"]];
+    NSMutableDictionary *focusDict = [[NSMutableDictionary alloc] initWithContentsOfURL:selectedPath];
+    float val = [(NSNumber *)[focusDict valueForKey:@"focusLock"] floatValue];
+    [videoDevice setFocusModeLockedWithLensPosition:val completionHandler:nil];
     videoDevice.activeVideoMinFrameDuration = CMTimeMake(1, 20);
     if ( !videoDevice ) {
         NSLog(@"Could not initialize camera at position %d", devicePosition);

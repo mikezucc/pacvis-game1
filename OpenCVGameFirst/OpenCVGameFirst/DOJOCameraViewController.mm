@@ -53,12 +53,13 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 
 @property (nonatomic) NSString *viewDidLoadAlready;
 @property BOOL didRun;
+@property BOOL isFocusLocked;
 
 @end
 
 @implementation DOJOCameraViewController
 
-@synthesize cameraButton,recordButton,stillButton, obtainController, imageData, mediaType, originalImage, videoData, didRun, viewDidLoadAlready, focusAndLock;
+@synthesize cameraButton,recordButton,stillButton, obtainController, imageData, mediaType, originalImage, videoData, didRun, viewDidLoadAlready, focusAndLock, isFocusLocked;
 
 
 //@synthesize session;
@@ -90,6 +91,7 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
     [super viewDidLoad];
     NSLog(@"VIEW LOADED");
     didRun = NO;
+    self.isFocusLocked = NO;
     // Create the AVCaptureSession
     AVCaptureSession *session = [[AVCaptureSession alloc] init];
     session.sessionPreset = AVCaptureSessionPreset640x480;
@@ -534,14 +536,44 @@ static void * SessionRunningAndDeviceAuthorizedContext = &SessionRunningAndDevic
 
 -(IBAction)focusAndLock:(id)sender
 {
-    [[[self videoDeviceInput] device] setExposureMode:AVCaptureExposureModeLocked];
-    [[[self videoDeviceInput] device] setFocusMode:AVCaptureFocusModeLocked];
+    if (self.isFocusLocked)
+    {
+         NSLog(@"unlock the lens");
+        [[[self videoDeviceInput] device] setExposureMode:AVCaptureExposureModeAutoExpose];
+        [[[self videoDeviceInput] device] setFocusMode:AVCaptureFocusModeAutoFocus];
+        [self.focusAndLock setTitle:@"set Focus lock" forState:UIControlStateNormal];
+        [self.focusAndLock setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        self.isFocusLocked = NO;
+    }
+    else
+    {
+        NSLog(@"lock the lens");
+        NSError *error;
+        if ([[[self videoDeviceInput] device] lockForConfiguration:&error])
+        {
+            [[[self videoDeviceInput] device] setFocusModeLockedWithLensPosition:[[self videoDeviceInput] device].lensPosition completionHandler:nil];
+            [[[self videoDeviceInput] device] setExposureMode:AVCaptureExposureModeLocked];
+            [[[self videoDeviceInput] device] setFocusMode:AVCaptureFocusModeLocked];
+            [self.focusAndLock setTitle:[NSString stringWithFormat:@"FOCUS LOCKED: %f",[[self videoDeviceInput] device].lensPosition] forState:UIControlStateNormal];
+            [self.focusAndLock setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+            self.isFocusLocked = YES;
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSURL *selectedPath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"focusData.plist"]];
+            NSMutableDictionary *focusDict = [[NSMutableDictionary alloc] init];
+            [focusDict setValue:[NSNumber numberWithFloat:[[self videoDeviceInput] device].lensPosition] forKey:@"focusLock"];
+            [focusDict writeToURL:selectedPath atomically:YES];
+        }
+    }
 }
 
 - (IBAction)focusAndExposeTap:(UIGestureRecognizer *)gestureRecognizer
 {
     CGPoint devicePoint = [(AVCaptureVideoPreviewLayer *)[[self previewView] layer] captureDevicePointOfInterestForPoint:[gestureRecognizer locationInView:[gestureRecognizer view]]];
-    [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    if (!self.isFocusLocked)
+    {
+        [self focusWithMode:AVCaptureFocusModeAutoFocus exposeWithMode:AVCaptureExposureModeAutoExpose atDevicePoint:devicePoint monitorSubjectAreaChange:YES];
+    }
 }
 
 - (void)subjectAreaDidChange:(NSNotification *)notification

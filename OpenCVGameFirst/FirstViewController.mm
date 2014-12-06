@@ -28,7 +28,7 @@ cv::Mat cameraMatrixFirstVC;
 cv::Mat distortionCoeffFirstVC;
 
 Mat testImage;
-cv::Size boardSize(5, 4);
+cv::Size boardSize(6, 9);
 vector<Point2f> corners;
 vector<vector<Point2f>> imgPoints;
 Mat outputImage;
@@ -150,7 +150,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         initialFrame.resize(4, initialFrame[0]);
     }
     
-    if (objPoints.size() != 20)
+    if (objPoints.size() != 54)
     {
         for (int i = 0; i < boardSize.height; ++i)
         {
@@ -168,7 +168,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     
     cout << "start while" << endl;
     //cv::Mat imgmat = inputFrame.clone();
-    if (findChessboardCorners(inputFrame, cv::Size(5, 4), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
+    if (findChessboardCorners(inputFrame, cv::Size(6, 9), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
     {
         drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
         //calibrateCamera()

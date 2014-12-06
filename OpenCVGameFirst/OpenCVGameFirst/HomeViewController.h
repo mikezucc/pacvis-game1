@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *numberOfImagesField;
 @property (strong, nonatomic) IBOutlet UITextField *rmsField;
+@property (strong, nonatomic) IBOutlet UITextField *lensField;
 //@property (strong, nonatomic) IBOutlet UITextField *numberOfImagesField;
 
 @end

@@ -41,7 +41,7 @@ Mat distortionCoeffGlobal;
 
 @implementation HomeViewController
 
-@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8, chessboardDisplay, sessionQueue;
+@synthesize numberOfImagesField, recordCalibImages, rmsField, runCalibrationScheme, poseEstim8, chessboardDisplay, sessionQueue, lensField;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -58,6 +58,7 @@ Mat distortionCoeffGlobal;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"calibrationImages.plist"]];
+    NSURL *selectedPath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"focusData.plist"]];
     NSFileManager *fMan = [NSFileManager defaultManager];
     NSMutableArray *listOfCalibrationImages = [[NSMutableArray alloc] init];
     if ([fMan fileExistsAtPath:picStoragePath.path])
@@ -70,6 +71,15 @@ Mat distortionCoeffGlobal;
     {
         // do nothing
         numberOfImagesField.text = @"0";
+    }
+    if ([fMan fileExistsAtPath:selectedPath.path])
+    {
+        NSMutableDictionary *focusDict = [[NSMutableDictionary alloc] initWithContentsOfURL:selectedPath];
+        lensField.text = [NSString stringWithFormat:@"%f",[(NSNumber *)[focusDict valueForKey:@"focusLock"] floatValue]];
+    }
+    else
+    {
+        lensField.text =  @"no data";
     }
     chessboardDisplay = [[UIImageView alloc] initWithFrame:CGRectMake(0, 260, self.view.frame.size.width, self.view.frame.size.height-260)];
     chessboardDisplay.contentMode = UIViewContentModeScaleToFill;
@@ -99,6 +109,7 @@ Mat distortionCoeffGlobal;
         listOfCalibrationImages = [[NSMutableArray alloc] init];
         [listOfCalibrationImages writeToURL:picStoragePath atomically:YES];
         numberOfImagesField.text = @"cleaned";
+        lensField.text =  @"no data";
     }
     else
     {
@@ -308,7 +319,7 @@ Mat loadACalibrationImage(String filepath)
 
 -(void)runCalib:(vector<String>)listOfPicLocations
 {
-    double widthInp = 4, heightInp = 5;
+    double widthInp = 6, heightInp = 9;
     
     //IplImage *img;
     Mat imgMat;
@@ -341,7 +352,7 @@ Mat loadACalibrationImage(String filepath)
         {
             NSLog(@"image loaded correctly");
         }
-        if (findChessboardCorners(imgMat, cv::Size(5, 4), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
+        if (findChessboardCorners(imgMat, cv::Size(6, 9), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
         {
             imgPoints.push_back(corners);
             drawChessboardCorners(imgMat, boardSize, Mat(corners), true);
