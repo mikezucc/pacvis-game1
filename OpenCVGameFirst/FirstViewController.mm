@@ -147,7 +147,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         initialFrame.push_back(Point3f(20, 20, 0));
         initialFrame.push_back(Point3f(0, 0, 0));
         initialFrame.push_back(Point3f(0, 20, 0));
-        initialFrame.resize(4, initialFrame[0]);
+        //initialFrame.resize(4, initialFrame[0]);
     }
     
     if (objPoints.size() != 54)
@@ -187,7 +187,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
         transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
         warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
-        circle(inputFrame, transformedFrame[0],10,Scalar(0,255,0),5,-1);
+        circle(inputFrame, transformedFrame[0],10,Scalar(255,0,0),5,-1); // RED this one occasionally errors
+        circle(inputFrame, transformedFrame[1],10,Scalar(255,255,0),5,-1); // YELLOW this one is flying everywhere
+        circle(inputFrame, transformedFrame[2],10,Scalar(0,255,255),5,-1); // teal, this one is the origin point
+        circle(inputFrame, transformedFrame[3],10,Scalar(0,255,0),5,-1); // this one flying everywhere
     }
     cout << "query frame RVEC: " << rvec << endl;
     return inputFrame;
