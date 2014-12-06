@@ -146,12 +146,14 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         imageFrame.push_back(Point2f(20, 20));
         initialFrame.push_back(Point3f(0, 0, 0));
         initialFrame.push_back(Point3f(0, 0, -10));
-        initialFrame.push_back(Point3f(10, 0, 0));
-        initialFrame.push_back(Point3f(10, 0, -10));
+        initialFrame.push_back(Point3f(30, 0, 0));
+        initialFrame.push_back(Point3f(30, 0, -10));
         
          // THIS IS FOR A CUBE, this messes up other code
-        initialFrame.push_back(Point3f(10, 10, 0));
-        initialFrame.push_back(Point3f(0, 10, -10));
+        initialFrame.push_back(Point3f(30, 30, 0));
+        initialFrame.push_back(Point3f(0, 30, -10));
+        initialFrame.push_back(Point3f(30, 30, -10));
+        initialFrame.push_back(Point3f(0, 30, 0));
         //initialFrame.resize(4, initialFrame[0]);
     }
     
@@ -175,7 +177,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     //cv::Mat imgmat = inputFrame.clone();
     if (findChessboardCorners(inputFrame, cv::Size(6, 9), corners, CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE))
     {
-        drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
+        //drawChessboardCorners(inputFrame, boardSize, Mat(corners), true);
         //calibrateCamera()
         //cout << "obj points is " << objPoints << endl;
         //cout << "distortion firstVC" << distortionCoeffFirstVC << endl << "cam matrix: " << cameraMatrixFirstVC << endl;
@@ -242,8 +244,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             circle(inputFrame, transformedFrame[1],10,Scalar(255,255,0),5,-1); // YELLOW this one is flying everywhere
             circle(inputFrame, transformedFrame[2],10,Scalar(0,255,255),5,-1); // teal, this one is the origin point
             circle(inputFrame, transformedFrame[3],10,Scalar(0,255,0),5,-1); // this one flying everywhere
-            circle(inputFrame, transformedFrame[4],10,Scalar(0,255,0),5,-1);
-            circle(inputFrame, transformedFrame[5],10,Scalar(0,255,0),5,-1);
+            circle(inputFrame, transformedFrame[4],10,Scalar(255,255,255),5,-1);
+            circle(inputFrame, transformedFrame[5],10,Scalar(255,0,255),5,-1);
+            circle(inputFrame, transformedFrame[6],10,Scalar(0,255,0),5,-1);
+            circle(inputFrame, transformedFrame[7],10,Scalar(0,255,0),5,-1);
 
         }
         else
