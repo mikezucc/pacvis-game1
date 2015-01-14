@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "MyScene.h"
 #import <opencv2/videoio/cap_ios.h>
 #import <opencv2/opencv.hpp>
 #import "opencv2/core.hpp"
@@ -38,11 +39,14 @@ vector<Point2f> transformedFrame;
 vector<Point3f> objPoints;
 Mat transfMat;
 Mat rvec, tvec;
+bool didFindChess;
  
 
 @interface FirstViewController () <VideoSourceDelegate>
 
 @property (nonatomic) dispatch_queue_t displaySerializer;
+@property (nonatomic, weak) IBOutlet SKView *frontView;
+@property (nonatomic, assign) CGFloat rotAngle;
 
 @end
 
@@ -55,6 +59,44 @@ Mat rvec, tvec;
     [super viewDidLoad];
     
     displaySerializer = dispatch_queue_create("com.ocvGame.displayThread", DISPATCH_QUEUE_SERIAL);
+    
+    self.rotAngle = 10;
+    
+    // Configure the front view.
+    SKView * skViewFront = self.frontView;
+    skViewFront.showsFPS = YES;
+    skViewFront.showsNodeCount = YES;
+    
+    // Create and configure the front scene.
+    SKScene * sceneFront = [MyScene sceneWithSize:skViewFront.bounds.size];
+    sceneFront.scaleMode = SKSceneScaleModeAspectFill;
+    
+    // Present the front scene.
+    [skViewFront presentScene:sceneFront];
+    
+    didFindChess = false;
+}
+
+-(void)rotateFrontViewOnXAxis
+{
+    NSLog(@"rotating now");
+    self.rotAngle -= 10;
+    
+    float angle = (M_PI / 180.0f) * self.rotAngle;
+    
+    float XTheta = rvec.at<float>(0)/M_PI;
+    float YTheta = rvec.at<float>(1)/M_PI;
+    float ZTheta = rvec.at<float>(2)/M_PI;
+    
+    cout << "rvec before rotate is " << rvec << endl;
+    cout<< "must rotate" << (rvec.at<float>(0)/M_PI) * 180 << "degrees" << endl;
+    
+    CATransform3D transform3DRotation = CATransform3DMakeRotation(M_PI, rvec.at<float>(0)/M_PI, 0, 0.0);
+    //CATransform3DRotate(transform3DRotation, YTheta, 0.0, 1.0, 0.0);
+    //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
+    
+    self.frontView.layer.transform = transform3DRotation;
+    [self.frontView setNeedsLayout];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -75,6 +117,7 @@ Mat rvec, tvec;
     self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 480, 640)];
     self.backgroundImageView.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.backgroundImageView];
+    [self.view sendSubviewToBack:self.backgroundImageView];
     //[self.backgroundImageView setImage:newThang];
     
     self.closeThisView = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 40, 40)];
@@ -104,7 +147,13 @@ Mat rvec, tvec;
     cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
     cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
     image.copyTo(imageCopyLocal);
-    imageCopyLocal = performPoseAndPosition(imageCopyLocal);
+    imageCopyLocal  = performPoseAndPosition(imageCopyLocal);
+    if (didFindChess)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self rotateFrontViewOnXAxis];
+        });
+    }
     cout << "row size: " << imageCopyLocal.rows << endl;
     UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
     imageCopyLocal.release();
@@ -181,13 +230,17 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         //calibrateCamera()
         //cout << "obj points is " << objPoints << endl;
         //cout << "distortion firstVC" << distortionCoeffFirstVC << endl << "cam matrix: " << cameraMatrixFirstVC << endl;
-        cout << "objPoints 1: " << objPoints << endl << " corners: " << corners << endl;
-        bool solved = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
+        
+        //cout << "objPoints 1: " << objPoints << endl << " corners: " << corners << endl;
+        didFindChess = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
+        //cout << "rvec is " << rvec << endl;
+        
+        /*
         if (solved)
         {
             NSLog(@"solved");
             projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
-            /*
+     
             transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
             warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
             int roiWidth = 0, roiHeight = 0;
@@ -237,7 +290,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             //cout << "roi: " << roi << endl;
             //cv::Mat destinationROI = inputFrame( roi );
             //outputImage.copyTo( destinationROI );
-             */
+     
             
             
             circle(inputFrame, transformedFrame[0],10,Scalar(255,0,0),5,-1); // RED this one occasionally errors
@@ -254,7 +307,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         {
             NSLog(@"not solved");
         }
-        /*
+
         cv::Mat rotation, viewMatrix(4, 4, CV_64F);
         cv::Rodrigues(rvec, rotation);
         
@@ -277,11 +330,11 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         cv::transpose(viewMatrix , glViewMatrix);
         //glMatrixMode(GL_MODELVIEW);
         //glLoadMatrixd(&glViewMatrix.at<double>(0, 0));
-        */
+            */
 
         
     }
-    cout << "query frame RVEC: " << rvec << endl;
+    //cout << "query frame RVEC: " << rvec << endl;
     return inputFrame;
 }
 #endif

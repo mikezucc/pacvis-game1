@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "VideoFeed.h"
+#import <SpriteKit/SpriteKit.h>
 
 @interface FirstViewController : UIViewController
 {

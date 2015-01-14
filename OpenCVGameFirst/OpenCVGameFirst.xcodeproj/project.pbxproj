@@ -12,6 +12,10 @@
 		0E2E7C981A2FB8AF00710CBC /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C971A2FB8AF00710CBC /* opencv2.framework */; };
 		0E2E7C9A1A2FBAFB00710CBC /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */; };
 		0E30FFA11A3303A700F34AFE /* smallface.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E30FFA01A3303A700F34AFE /* smallface.png */; };
+		0E345D081A66469400836E0D /* MyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E345D031A66469400836E0D /* MyScene.m */; };
+		0E345D091A66469400836E0D /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E345D051A66469400836E0D /* Spaceship.png */; };
+		0E345D0A1A66469400836E0D /* SwaggyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E345D071A66469400836E0D /* SwaggyViewController.m */; };
+		0E345D0C1A66471C00836E0D /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E345D0B1A66471C00836E0D /* SpriteKit.framework */; };
 		0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0E3B45111A2E949200C6AC91 /* HomeViewController.mm */; };
 		0E552FBB1A308A1600EECFDB /* face.png in Resources */ = {isa = PBXBuildFile; fileRef = 0E552FBA1A308A1600EECFDB /* face.png */; };
 		0E71691F19E486B0000AD0A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E71691E19E486B0000AD0A4 /* main.m */; };
@@ -54,6 +58,12 @@
 		0E2E7C971A2FB8AF00710CBC /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		0E30FFA01A3303A700F34AFE /* smallface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smallface.png; sourceTree = SOURCE_ROOT; };
+		0E345D031A66469400836E0D /* MyScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScene.m; sourceTree = SOURCE_ROOT; };
+		0E345D041A66469400836E0D /* MyScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScene.h; sourceTree = SOURCE_ROOT; };
+		0E345D051A66469400836E0D /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = SOURCE_ROOT; };
+		0E345D061A66469400836E0D /* SwaggyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwaggyViewController.h; sourceTree = SOURCE_ROOT; };
+		0E345D071A66469400836E0D /* SwaggyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwaggyViewController.m; sourceTree = SOURCE_ROOT; };
+		0E345D0B1A66471C00836E0D /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
 		0E3B45101A2E949200C6AC91 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		0E3B45111A2E949200C6AC91 /* HomeViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HomeViewController.mm; sourceTree = "<group>"; };
 		0E552FBA1A308A1600EECFDB /* face.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = face.png; sourceTree = SOURCE_ROOT; };
@@ -96,6 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E345D0C1A66471C00836E0D /* SpriteKit.framework in Frameworks */,
 				0E2E7C981A2FB8AF00710CBC /* opencv2.framework in Frameworks */,
 				0E71695E19E495B6000AD0A4 /* CoreImage.framework in Frameworks */,
 				0E71695F19E495B6000AD0A4 /* CoreMedia.framework in Frameworks */,
@@ -122,6 +133,7 @@
 		0E71691019E486B0000AD0A4 = {
 			isa = PBXGroup;
 			children = (
+				0E345D0B1A66471C00836E0D /* SpriteKit.framework */,
 				0E2E7C991A2FBAFB00710CBC /* AssetsLibrary.framework */,
 				0E2E7C971A2FB8AF00710CBC /* opencv2.framework */,
 				0E71695B19E495B6000AD0A4 /* CoreImage.framework */,
@@ -199,6 +211,11 @@
 				0E71695219E48AF9000AD0A4 /* VideoFrame.h */,
 				0E71694E19E48906000AD0A4 /* FirstViewController.h */,
 				0E71694F19E48906000AD0A4 /* FirstViewController.mm */,
+				0E345D041A66469400836E0D /* MyScene.h */,
+				0E345D031A66469400836E0D /* MyScene.m */,
+				0E345D051A66469400836E0D /* Spaceship.png */,
+				0E345D061A66469400836E0D /* SwaggyViewController.h */,
+				0E345D071A66469400836E0D /* SwaggyViewController.m */,
 				0E71695419E492DA000AD0A4 /* VideoFeed.h */,
 				0E71695519E492DA000AD0A4 /* VideoFeed.mm */,
 			);
@@ -311,6 +328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E345D091A66469400836E0D /* Spaceship.png in Resources */,
 				0E71692819E486B0000AD0A4 /* Main.storyboard in Resources */,
 				0E71692D19E486B0000AD0A4 /* LaunchScreen.xib in Resources */,
 				0E30FFA11A3303A700F34AFE /* smallface.png in Resources */,
@@ -340,7 +358,9 @@
 				0EFCBEF51A073EE600FA90BB /* VideoFeedCalibrate.mm in Sources */,
 				0E71695619E492DA000AD0A4 /* VideoFeed.mm in Sources */,
 				0EC6880419E61A8C00E17BA9 /* ObtainCalibFramesViewController.mm in Sources */,
+				0E345D0A1A66469400836E0D /* SwaggyViewController.m in Sources */,
 				0E71695019E48906000AD0A4 /* FirstViewController.mm in Sources */,
+				0E345D081A66469400836E0D /* MyScene.m in Sources */,
 				0E71691F19E486B0000AD0A4 /* main.m in Sources */,
 				0E2E7C931A2F3D4C00710CBC /* DOJOPreviewView.m in Sources */,
 				0E3B45121A2E949200C6AC91 /* HomeViewController.mm in Sources */,
