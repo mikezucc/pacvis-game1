@@ -79,25 +79,84 @@ bool didFindChess;
 
 -(void)rotateFrontViewOnXAxis
 {
-    NSLog(@"rotating now");
-    self.rotAngle -= 10;
-    
-    float angle = (M_PI / 180.0f) * self.rotAngle;
-    
-    float XTheta = rvec.at<float>(0)/M_PI;
-    float YTheta = rvec.at<float>(1)/M_PI;
-    float ZTheta = rvec.at<float>(2)/M_PI;
-    
-    cout << "rvec before rotate is " << rvec << endl;
-    cout<< "must rotate" << (rvec.at<float>(0)/M_PI) * 180 << "degrees" << endl;
-    
-    CATransform3D transform3DRotation = CATransform3DMakeRotation(M_PI, rvec.at<float>(0)/M_PI, 0, 0.0);
-    //CATransform3DRotate(transform3DRotation, YTheta, 0.0, 1.0, 0.0);
-    //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
-    
-    self.frontView.layer.transform = transform3DRotation;
-    [self.frontView setNeedsLayout];
+    if (rvec.size().height != 0)
+    {
+        NSLog(@"rotating now");
+        self.rotAngle -= 10;
+        
+        float angle = (M_PI / 180.0f) * self.rotAngle;
+        
+        float XTheta = rvec.at<double>(0);
+        float YTheta = rvec.at<double>(1);
+        float ZTheta = rvec.at<double>(2)/M_PI;
+        
+        cout << "rvec before rotate is " << rvec << endl;
+        cout<< "must rotate" << (M_PI -(float)XTheta) << "radians" << endl;
+        
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            CATransform3D transform3DRotation = CATransform3DMakeRotation( (float)YTheta, 0.0, 1.0, 0.0);
+            //CATransform3DRotate(transform3DRotation, (float)YTheta, 0.0, 1.0, 0.0);
+            //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
+            
+            self.frontView.layer.transform = transform3DRotation;
+            [self.frontView setNeedsLayout];
+        });
+    }
 }
+/*
++ (CATransform3D)transformQuadrilateral:(Quadrilateral)origin toQuadrilateral:(Quadrilateral)destination {
+    
+    Point2d *cvsrc = [self MatrixWithQuadrilateral:origin];
+    cv::Mat src_mat = Mat( 4, 2, CV_32FC1 );
+    src_mat.data ;
+    
+    Point2d *cvdst = [self MatrixWithQuadrilateral:destination];
+    cv::Mat dst_mat = Mat( 4, 2, CV_32FC1 );
+    set(dst_mat, cvdst, sizeof(Point2d));
+    
+    cv::Mat H = Mat(3,3,CV_32FC1);
+    findHomography(src_mat, dst_mat, H);
+    src_mat.release();
+    dst_mat.release();
+    
+    CATransform3D transform = [self transform3DWithCMatrix:H->data.fl];
+    cvReleaseMat(&H);
+    
+    return transform;
+}
+
++ (Point2d *)MatrixWithQuadrilateral:(Quadrilateral)origin {
+    
+    Point2d *cvsrc = (Point2d *)malloc(4*sizeof(Point2d));
+    cvsrc[0].x = origin.upperLeft.x;
+    cvsrc[0].y = origin.upperLeft.y;
+    cvsrc[1].x = origin.upperRight.x;
+    cvsrc[1].y = origin.upperRight.y;
+    cvsrc[2].x = origin.lowerRight.x;
+    cvsrc[2].y = origin.lowerRight.y;
+    cvsrc[3].x = origin.lowerLeft.x;
+    cvsrc[3].y = origin.lowerLeft.y;
+    return cvsrc;
+}
+
++ (CATransform3D)transform3DWithCMatrix:(float *)matrix {
+    CATransform3D transform = CATransform3DIdentity;
+    
+    transform.m11 = matrix[0];
+    transform.m21 = matrix[1];
+    transform.m41 = matrix[2];
+    
+    transform.m12 = matrix[3];
+    transform.m22 = matrix[4];
+    transform.m42 = matrix[5];
+    
+    transform.m14 = matrix[6];
+    transform.m24 = matrix[7];
+    transform.m44 = matrix[8];
+    
+    return transform; 
+}
+*/
 
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -106,9 +165,9 @@ bool didFindChess;
     cout << "camera matrix global: " << cameraMatrixFirstVC << endl;
     
     UIImage *testface = [UIImage imageNamed:@"smallface.png"];
-    testImage = [self toCVMatFromRGBWithAlpha:testface];
+    testImage = [self tocv::MatFromRGBWithAlpha:testface];
     cout << "testImage: " << testImage.rows << endl;
-    //UIImage *newThang = [self fromCVMatRGB:testImage];
+    //UIImage *newThang = [self fromcv::MatRGB:testImage];
     
     self.videoSource = [[VideoFeed alloc] init];
     self.videoSource.delegate = self;
@@ -150,14 +209,12 @@ bool didFindChess;
     imageCopyLocal  = performPoseAndPosition(imageCopyLocal);
     if (didFindChess)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self rotateFrontViewOnXAxis];
-        });
+        [self rotateFrontViewOnXAxis];
     }
     cout << "row size: " << imageCopyLocal.rows << endl;
-    UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
+    UIImage *convImg = [self fromcv::MatRGB:imageCopyLocal];
     imageCopyLocal.release();
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_sync(dispatch_get_main_queue(), ^{
         NSLog(@"updating with image %ld",(long)convImg.size.width);
         [[self backgroundImageView] setImage:convImg];
     });
@@ -168,7 +225,7 @@ bool didFindChess;
         image.copyTo(imageCopyLocal);
         imageCopyLocal = performPoseAndPosition(imageCopyLocal);
         cout << "row size: " << imageCopyLocal.rows << endl;
-        UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
+        UIImage *convImg = [self fromcv::MatRGB:imageCopyLocal];
         imageCopyLocal.release();
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"updating with image %ld",(long)convImg.size.width);
@@ -339,7 +396,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
 }
 #endif
 
-- (cv::Mat)toCVMatFromRGB:(UIImage*)image
+- (cv::Mat)tocv::MatFromRGB:(UIImage*)image
 {
     // (1) Get image dimensions
     CGFloat cols = image.size.width;
@@ -347,10 +404,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     NSLog(@"imageDims are %f x %f",cols, rows);
     
     // (2) Create OpenCV image container, 8 bits per component, 4 channels
-    cv::Mat cvMat(rows, cols, CV_8UC3);
+    cv::Mat cv::Mat(rows, cols, CV_8UC3);
     CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
     // (3) Create CG context and draw the image
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+    CGContextRef contextRef = CGBitmapContextCreate(cv::Mat.data,
                                                     cols,
                                                     rows,
                                                     CGImageGetBitsPerComponent(image.CGImage),
@@ -363,30 +420,30 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     CGContextRelease(contextRef);
     
     // (4) Return OpenCV image container reference
-    return cvMat;
+    return cv::Mat;
 }
 
-- (UIImage*)fromCVMatRGB:(const cv::Mat&)cvMat
+- (UIImage*)fromcv::MatRGB:(const cv::Mat&)cv::Mat
 {
-    NSLog(@"starting CVMAT RGB -> UIIMAGE");
+    NSLog(@"starting cv::Mat RGB -> UIIMAGE");
     // (1) Construct the correct color space
     CGColorSpaceRef colorSpace;
-    if ( cvMat.channels() == 1 ) {
+    if ( cv::Mat.channels() == 1 ) {
         colorSpace = CGColorSpaceCreateDeviceGray();
     } else {
         colorSpace = CGColorSpaceCreateDeviceRGB();
     }
     
     // (2) Create image data reference
-    CFDataRef data = CFDataCreate(kCFAllocatorDefault, cvMat.data, (cvMat.elemSize() * cvMat.total()));
+    CFDataRef data = CFDataCreate(kCFAllocatorDefault, cv::Mat.data, (cv::Mat.elemSize() * cv::Mat.total()));
     
     // (3) Create CGImage from cv::Mat container
     CGDataProviderRef provider = CGDataProviderCreateWithCFData(data);
-    CGImageRef imageRef = CGImageCreate(cvMat.cols,
-                                        cvMat.rows,
+    CGImageRef imageRef = CGImageCreate(cv::Mat.cols,
+                                        cv::Mat.rows,
                                         8,
-                                        8 * cvMat.elemSize(),
-                                        cvMat.step[0],
+                                        8 * cv::Mat.elemSize(),
+                                        cv::Mat.step[0],
                                         colorSpace,
                                         kCGImageAlphaNone | kCGBitmapByteOrderDefault,
                                         provider,
@@ -407,7 +464,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     return finalImage;
 }
 
-- (cv::Mat)toCVMatFromRGBWithAlpha:(UIImage*)image
+- (cv::Mat)tocv::MatFromRGBWithAlpha:(UIImage*)image
 {
     // (1) Get image dimensions
     CGFloat cols = image.size.width;
@@ -415,10 +472,10 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     NSLog(@"imageDims are %f x %f",cols, rows);
     
     // (2) Create OpenCV image container, 8 bits per component, 4 channels
-    cv::Mat cvMat(rows, cols, CV_8UC4);
+    cv::Mat cv::Mat(rows, cols, CV_8UC4);
     CGImage *coreimage = image.CGImage;
     // (3) Create CG context and draw the image
-    CGContextRef contextRef = CGBitmapContextCreate(cvMat.data,
+    CGContextRef contextRef = CGBitmapContextCreate(cv::Mat.data,
                                                     cols,
                                                     rows,
                                                     CGImageGetBitsPerComponent(coreimage),
@@ -430,7 +487,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     CGContextRelease(contextRef);
     
     // (4) Return OpenCV image container reference
-    return cvMat;
+    return cv::Mat;
 }
 
 /*
