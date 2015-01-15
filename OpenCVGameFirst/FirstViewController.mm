@@ -99,9 +99,18 @@ bool didFindChess;
             //CATransform3DRotate(transform3DRotation, (float)YTheta, 0.0, 1.0, 0.0);
             //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
             */
+                /*
+                 CATransform3D transform3DRotation = CATransform3DMakeRotation( (float)YTheta, 0.0, 1.0, 0.0);
+                 //CATransform3DRotate(transform3DRotation, (float)YTheta, 0.0, 1.0, 0.0);
+                 //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
+                 */
             CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
             rotationAndPerspectiveTransform.m34 = 1.0 / -200;
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 45.0f * M_PI / 180.0f, 1.0f, 0.0f, 0.0f);
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, XTheta, 1.0f, 0.0f, 0.0f);
+            
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, YTheta, 0.0f, 1.0f, 0.0f);
+            
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, ZTheta, 1.0f, 0.0f, 0.0f);
             
             self.frontView.layer.transform = rotationAndPerspectiveTransform;
             [self.frontView setNeedsLayout];
@@ -211,20 +220,7 @@ bool didFindChess;
     cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
     cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
     image.copyTo(imageCopyLocal);
-    //imageCopyLocal  = performPoseAndPosition(imageCopyLocal);
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        /*
-         CATransform3D transform3DRotation = CATransform3DMakeRotation( (float)YTheta, 0.0, 1.0, 0.0);
-         //CATransform3DRotate(transform3DRotation, (float)YTheta, 0.0, 1.0, 0.0);
-         //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
-         */
-        CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-        rotationAndPerspectiveTransform.m34 = 1.0 / -200;
-        rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, 45.0f * M_PI / 180.0f, 1.0f, 0.0f, 0.0f);
-        
-        self.frontView.layer.transform = rotationAndPerspectiveTransform;
-        [self.frontView setNeedsLayout];
-    });
+    imageCopyLocal  = performPoseAndPosition(imageCopyLocal);
     if (didFindChess)
     {
         [self rotateFrontViewOnXAxis];
