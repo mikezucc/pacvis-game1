@@ -110,7 +110,7 @@ bool didFindChess;
             
             rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, YTheta, 0.0f, 1.0f, 0.0f);
             
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, ZTheta, 1.0f, 0.0f, 0.0f);
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, ZTheta, 0.0f, 0.0f, 1.0f);
             
             self.frontView.layer.transform = rotationAndPerspectiveTransform;
             [self.frontView setNeedsLayout];
