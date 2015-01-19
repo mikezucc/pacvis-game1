@@ -31,7 +31,7 @@ double rmsForField;
 Mat cameraMatrixGlobal;
 Mat distortionCoeffGlobal;
 
-@interface HomeViewController ()
+@interface HomeViewController () <UIAlertViewDelegate>
 
 // Session management.
 @property (nonatomic) dispatch_queue_t sessionQueue;
@@ -90,31 +90,44 @@ Mat distortionCoeffGlobal;
 
 -(IBAction)clearCalibrationImages:(id)sender
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"calibrationImages.plist"]];
-    NSFileManager *fMan = [NSFileManager defaultManager];
-    NSMutableArray *listOfCalibrationImages = [[NSMutableArray alloc] init];
-    if ([fMan fileExistsAtPath:picStoragePath.path])
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Clear Calib Images" message:@"Are you sure?" delegate:self cancelButtonTitle:@"no" otherButtonTitles:@"ok", nil];
+    [alert show];
+}
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
     {
-        listOfCalibrationImages = [[NSMutableArray alloc] initWithContentsOfFile:picStoragePath.path];
-        NSLog(@"list of calib images contains %@",listOfCalibrationImages);
-        NSError *error;
-        for (int i=0; i<listOfCalibrationImages.count;i++)
+        NSLog(@"you pressed cancel");
+        /*
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsDirectory = [paths objectAtIndex:0];
+        NSURL *picStoragePath = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:@"calibrationImages.plist"]];
+        NSFileManager *fMan = [NSFileManager defaultManager];
+        NSMutableArray *listOfCalibrationImages = [[NSMutableArray alloc] init];
+        if ([fMan fileExistsAtPath:picStoragePath.path])
         {
-            NSURL *picture = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpeg",[listOfCalibrationImages objectAtIndex:i]]]];
-            [fMan removeItemAtURL:picture error:&error];
-            numberOfImagesField.text = @"cleaning";
+            listOfCalibrationImages = [[NSMutableArray alloc] initWithContentsOfFile:picStoragePath.path];
+            NSLog(@"list of calib images contains %@",listOfCalibrationImages);
+            NSError *error;
+            for (int i=0; i<listOfCalibrationImages.count;i++)
+            {
+                NSURL *picture = [[NSURL alloc] initFileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpeg",[listOfCalibrationImages objectAtIndex:i]]]];
+                [fMan removeItemAtURL:picture error:&error];
+                numberOfImagesField.text = @"cleaning";
+            }
+            listOfCalibrationImages = [[NSMutableArray alloc] init];
+            [listOfCalibrationImages writeToURL:picStoragePath atomically:YES];
+            numberOfImagesField.text = @"cleaned";
+            lensField.text =  @"no data";
         }
-        listOfCalibrationImages = [[NSMutableArray alloc] init];
-        [listOfCalibrationImages writeToURL:picStoragePath atomically:YES];
-        numberOfImagesField.text = @"cleaned";
-        lensField.text =  @"no data";
-    }
-    else
-    {
-        // do nothing
-        numberOfImagesField.text = @"no images yet";
+        else
+        {
+            // do nothing
+            numberOfImagesField.text = @"no images yet";
+        }
+         */
     }
 }
 

@@ -88,7 +88,7 @@ bool didFindChess;
         
         float XTheta = rvec.at<double>(0);
         float YTheta = rvec.at<double>(1);
-        float ZTheta = rvec.at<double>(2)/M_PI;
+        float ZTheta = rvec.at<double>(2);
         
         cout << "rvec before rotate is " << rvec << endl;
         cout<< "must rotate" << (M_PI -(float)XTheta) << "radians" << endl;
@@ -104,15 +104,38 @@ bool didFindChess;
                  //CATransform3DRotate(transform3DRotation, (float)YTheta, 0.0, 1.0, 0.0);
                  //CATransform3DRotate(transform3DRotation, ZTheta, 0.0, 0.0, 1.0);
                  */
-            CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
-            rotationAndPerspectiveTransform.m34 = 1.0 / -200;
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, XTheta, 1.0f, 0.0f, 0.0f);
             
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, YTheta, 0.0f, 1.0f, 0.0f);
+            CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
+            
+            rotationAndPerspectiveTransform.m34 = 1.0 / -200;
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI/2, 0.1f, 0.0f, 0.0f);
+            /*
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -YTheta, 0.0f, 1.0f, 0.0f);
             
             rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, ZTheta, 0.0f, 0.0f, 1.0f);
+            */
+            //transfMat
+            /*
+            rotationAndPerspectiveTransform.m11 = transfMat.at<float>(0,0);
+            rotationAndPerspectiveTransform.m12 = transfMat.at<float>(0,1);
+            rotationAndPerspectiveTransform.m13 = transfMat.at<float>(0,2);
+            rotationAndPerspectiveTransform.m14 = transfMat.at<float>(0,3);
+            rotationAndPerspectiveTransform.m21 = transfMat.at<float>(1,0);
+            rotationAndPerspectiveTransform.m22 = transfMat.at<float>(1,1);
+            rotationAndPerspectiveTransform.m23 = transfMat.at<float>(1,2);
+            rotationAndPerspectiveTransform.m24 = transfMat.at<float>(1,3);
+            rotationAndPerspectiveTransform.m31 = transfMat.at<float>(2,0);
+            rotationAndPerspectiveTransform.m32 = transfMat.at<float>(2,1);
+            rotationAndPerspectiveTransform.m33 = transfMat.at<float>(2,2);
+            rotationAndPerspectiveTransform.m34 = transfMat.at<float>(2,3);
+            rotationAndPerspectiveTransform.m41 = transfMat.at<float>(3,0);
+            rotationAndPerspectiveTransform.m42 = transfMat.at<float>(3,1);
+            rotationAndPerspectiveTransform.m43 = transfMat.at<float>(3,2);
+            rotationAndPerspectiveTransform.m44 = transfMat.at<float>(3,3);
+            */
             
             self.frontView.layer.transform = rotationAndPerspectiveTransform;
+            self.frontView.layer.zPosition = 114;
             [self.frontView setNeedsLayout];
         });
     }
@@ -251,7 +274,6 @@ bool didFindChess;
     //holder.release();
 }
 
-
 #ifdef __cplusplus
 Mat performPoseAndPosition(const cv::Mat& inputFrame)
 {
@@ -261,19 +283,21 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     if (imageFrame.size() != 4)
     {
         imageFrame.push_back(Point2f(0, 0));
-        imageFrame.push_back(Point2f(0, 20));
-        imageFrame.push_back(Point2f(20, 0));
-        imageFrame.push_back(Point2f(20, 20));
+        imageFrame.push_back(Point2f(0, 100));
+        imageFrame.push_back(Point2f(100, 100));
+        imageFrame.push_back(Point2f(100, 0));
+        
         initialFrame.push_back(Point3f(0, 0, 0));
-        initialFrame.push_back(Point3f(0, 0, -10));
-        initialFrame.push_back(Point3f(30, 0, 0));
-        initialFrame.push_back(Point3f(30, 0, -10));
+        initialFrame.push_back(Point3f(0, -100, 0));
+        initialFrame.push_back(Point3f(100, -100, 0));
+        initialFrame.push_back(Point3f(100, 0, 0));
         
          // THIS IS FOR A CUBE, this messes up other code
-        initialFrame.push_back(Point3f(30, 30, 0));
+/*        initialFrame.push_back(Point3f(30, 30, 0));
         initialFrame.push_back(Point3f(0, 30, -10));
         initialFrame.push_back(Point3f(30, 30, -10));
         initialFrame.push_back(Point3f(0, 30, 0));
+ */
         //initialFrame.resize(4, initialFrame[0]);
     }
     
@@ -306,14 +330,15 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         didFindChess = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
         //cout << "rvec is " << rvec << endl;
         
-        /*
-        if (solved)
+
+        if (didFindChess)
         {
             NSLog(@"solved");
             projectPoints(initialFrame, rvec, tvec, cameraMatrixFirstVC, distortionCoeffFirstVC, transformedFrame, noArray(), 0);
-     
             transfMat = getPerspectiveTransform(imageFrame, transformedFrame);
-            warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
+            cout << "transformed mat is " << transfMat << endl;
+            //warpPerspective(testImage, outputImage, transfMat, testImage.size(), INTER_LINEAR, BORDER_CONSTANT, 0);
+            /*
             int roiWidth = 0, roiHeight = 0;
             roiWidth = outputImage.size().width;
             roiHeight = outputImage.size().height;
@@ -372,13 +397,14 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             circle(inputFrame, transformedFrame[5],10,Scalar(255,0,255),5,-1);
             circle(inputFrame, transformedFrame[6],10,Scalar(0,255,0),5,-1);
             circle(inputFrame, transformedFrame[7],10,Scalar(0,255,0),5,-1);
+            */
 
         }
         else
         {
             NSLog(@"not solved");
         }
-
+        /*
         cv::Mat rotation, viewMatrix(4, 4, CV_64F);
         cv::Rodrigues(rvec, rotation);
         
