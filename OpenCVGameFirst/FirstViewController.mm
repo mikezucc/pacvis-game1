@@ -48,17 +48,21 @@ bool didFindChess;
 @property (nonatomic, weak) IBOutlet SKView *frontView;
 @property (nonatomic, assign) CGFloat rotAngle;
 
+@property (strong, nonatomic) dispatch_queue_t cvQueue;
+
 @end
 
 @implementation FirstViewController
 
-@synthesize closeThisView, displaySerializer, backgroundImageView, videoSource;
+@synthesize closeThisView, displaySerializer, backgroundImageView, videoSource, cvQueue;
 
 -(void)viewDidLoad
 {
     [super viewDidLoad];
     
     displaySerializer = dispatch_queue_create("com.ocvGame.displayThread", DISPATCH_QUEUE_SERIAL);
+    
+    self.cvQueue = dispatch_queue_create("com.cvthread", DISPATCH_QUEUE_SERIAL);
     
     self.rotAngle = 10;
     
@@ -107,8 +111,10 @@ bool didFindChess;
             
             CATransform3D rotationAndPerspectiveTransform = CATransform3DIdentity;
             
-            rotationAndPerspectiveTransform.m34 = 1.0 / -200;
-            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, M_PI/2, 0.1f, 0.0f, 0.0f);
+            rotationAndPerspectiveTransform.m34 = 1.0f / -200.0f;
+            rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, XTheta, 0.1f, 0.0f, 0.0f);
+            
+            
             /*
             rotationAndPerspectiveTransform = CATransform3DRotate(rotationAndPerspectiveTransform, -YTheta, 0.0f, 1.0f, 0.0f);
             
@@ -135,8 +141,8 @@ bool didFindChess;
             */
             
             self.frontView.layer.transform = rotationAndPerspectiveTransform;
-            self.frontView.layer.zPosition = 114;
-            [self.frontView setNeedsLayout];
+            self.frontView.layer.zPosition = 200;
+            [self.frontView setNeedsDisplay];
         });
     }
 }
@@ -201,9 +207,9 @@ bool didFindChess;
     distortionCoeffFirstVC = self.distortionCoeffProperty;
     cout << "camera matrix global: " << cameraMatrixFirstVC << endl;
     
-    UIImage *testface = [UIImage imageNamed:@"smallface.png"];
-    testImage = [self toCVMatFromRGBWithAlpha:testface];
-    cout << "testImage: " << testImage.rows << endl;
+    //UIImage *testface = [UIImage imageNamed:@"smallface.png"];
+    //testImage = [self toCVMatFromRGBWithAlpha:testface];
+    //cout << "testImage: " << testImage.rows << endl;
     //UIImage *newThang = [self fromCVMatRGB:testImage];
     
     self.videoSource = [[VideoFeed alloc] init];
@@ -211,15 +217,16 @@ bool didFindChess;
     [self.videoSource startWithDevicePosition:AVCaptureDevicePositionBack];
     
     self.backgroundImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, 480, 640)];
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
     self.backgroundImageView.backgroundColor = [UIColor greenColor];
     [self.view addSubview:self.backgroundImageView];
     [self.view sendSubviewToBack:self.backgroundImageView];
     //[self.backgroundImageView setImage:newThang];
     
-    self.closeThisView = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 40, 40)];
+    /*self.closeThisView = [[UIButton alloc] initWithFrame:CGRectMake(20, 20, 40, 40)];
     [self.closeThisView setTitle:@"close me" forState:UIControlStateNormal];
     [self.closeThisView addTarget:self action:@selector(closeMe)forControlEvents:UIControlStateNormal];
-    [self.view addSubview:self.closeThisView];
+    [self.view addSubview:self.closeThisView];*/
 }
 
 -(IBAction)closeMe
@@ -237,24 +244,26 @@ bool didFindChess;
 - (void)frameReady:(uint8_t *)frameAddress {
     NSLog(@"delegate called on FIRST VIEW");
     cv::Mat holder = cv::Mat((int)640,(int)480,CV_8UC4,frameAddress);
-    cv::Mat image;
-    holder.copyTo(image);
-    holder.release();
-    cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
-    cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
-    image.copyTo(imageCopyLocal);
-    imageCopyLocal  = performPoseAndPosition(imageCopyLocal);
+    //cv::Mat imageCopyLocal;// = Mat(frame.rows, frame.cols,CV_8UC4);
+    //image.copyTo(imageCopyLocal);
+    holder  = performPoseAndPosition(holder);
     if (didFindChess)
     {
         [self rotateFrontViewOnXAxis];
     }
-    cout << "row size: " << imageCopyLocal.rows << endl;
-    UIImage *convImg = [self fromCVMatRGB:imageCopyLocal];
-    imageCopyLocal.release();
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        NSLog(@"updating with image %ld",(long)convImg.size.width);
+    //cout << "row size: " << imageCopyLocal.rows << endl;
+    UIImage *convImg = [self fromCVMatRGB:holder];
+    holder.release();
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //NSLog(@"updating with image %ld",(long)convImg.size.width);
         [[self backgroundImageView] setImage:convImg];
     });
+    convImg = nil;
+    //cv::Mat image;
+    //holder.copyTo(image);
+    //holder.release();
+    //cout << "frame dims is: " << image.rows << " by " << image.cols << endl;
+    
     /*
     dispatch_async( displaySerializer, ^{
         cout << "frame dims is: " << holder.rows << " by " << holder.cols << endl;
@@ -283,14 +292,14 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
     if (imageFrame.size() != 4)
     {
         imageFrame.push_back(Point2f(0, 0));
-        imageFrame.push_back(Point2f(0, 100));
-        imageFrame.push_back(Point2f(100, 100));
-        imageFrame.push_back(Point2f(100, 0));
+        imageFrame.push_back(Point2f(0, 10));
+        imageFrame.push_back(Point2f(10, 10));
+        imageFrame.push_back(Point2f(10, 0));
         
         initialFrame.push_back(Point3f(0, 0, 0));
-        initialFrame.push_back(Point3f(0, -100, 0));
-        initialFrame.push_back(Point3f(100, -100, 0));
-        initialFrame.push_back(Point3f(100, 0, 0));
+        initialFrame.push_back(Point3f(0, 0, -10));
+        initialFrame.push_back(Point3f(10, 0, -10));
+        initialFrame.push_back(Point3f(10, 0, 0));
         
          // THIS IS FOR A CUBE, this messes up other code
 /*        initialFrame.push_back(Point3f(30, 30, 0));
@@ -330,7 +339,6 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
         didFindChess = solvePnP(objPoints, corners, cameraMatrixFirstVC, distortionCoeffFirstVC, rvec, tvec, false, ITERATIVE);
         //cout << "rvec is " << rvec << endl;
         
-
         if (didFindChess)
         {
             NSLog(@"solved");
@@ -386,7 +394,7 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             //cout << "roi: " << roi << endl;
             //cv::Mat destinationROI = inputFrame( roi );
             //outputImage.copyTo( destinationROI );
-     
+     */
             
             
             circle(inputFrame, transformedFrame[0],10,Scalar(255,0,0),5,-1); // RED this one occasionally errors
@@ -397,7 +405,6 @@ Mat performPoseAndPosition(const cv::Mat& inputFrame)
             circle(inputFrame, transformedFrame[5],10,Scalar(255,0,255),5,-1);
             circle(inputFrame, transformedFrame[6],10,Scalar(0,255,0),5,-1);
             circle(inputFrame, transformedFrame[7],10,Scalar(0,255,0),5,-1);
-            */
 
         }
         else

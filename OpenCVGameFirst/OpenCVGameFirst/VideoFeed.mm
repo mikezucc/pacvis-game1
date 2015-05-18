@@ -150,8 +150,8 @@ didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer
     
     // (3) Construct VideoFrame struct
     uint8_t *baseAddress = (uint8_t*)CVPixelBufferGetBaseAddress(imageBuffer);
-    size_t width = CVPixelBufferGetWidth(imageBuffer);
-    size_t height = CVPixelBufferGetHeight(imageBuffer);
+    //size_t width = CVPixelBufferGetWidth(imageBuffer);
+    //size_t height = CVPixelBufferGetHeight(imageBuffer);
     size_t stride = CVPixelBufferGetBytesPerRow(imageBuffer);
     cout << "stride is: " << stride << endl;
     //struct VideoFrame frame = {width, height, stride, baseAddress};
