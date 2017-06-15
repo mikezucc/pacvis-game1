@@ -1,9 +1,13 @@
 pacvis-game1
 ============
 
-under development
+[Cube Capture](https://media.giphy.com/media/GeJC6fiS3DWk8/giphy.gif)
 
-This is an attempt to make an actually fun implementation of AR for mobile gaming. You can view the "mz-cubeDemo" branch to get a working snapshot of a cube displayed referencing the board's coord space.
+This is an attempt to make a multiplayer AR mobile game. You can view the "mz-cubeDemo" branch to get a working snapshot of a cube displayed referencing the board's coord space.
+
+Original inspiration project was https://github.com/mikezucc/augmented-reality-fighter-pygame
+
+I only managed to get so far. This was one of my first attempts at linear algebra in Objective-C++ on mobile.
 
 #NOTE
 This app uses Apple's iOS 8 new API for accessing the focus parameter of the AVCaptureDevice to try to minimize error during calibration and runtime of the Demo. It will only work on iOS 8, and probably with iphone 5s and above.
