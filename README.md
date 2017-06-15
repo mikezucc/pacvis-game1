@@ -1,7 +1,7 @@
 pacvis-game1
 ============
 
-[Cube Capture](https://media.giphy.com/media/GeJC6fiS3DWk8/giphy.gif)
+![Cube Capture](https://media.giphy.com/media/GeJC6fiS3DWk8/giphy.gif)
 
 This is an attempt to make a multiplayer AR mobile game. You can view the "mz-cubeDemo" branch to get a working snapshot of a cube displayed referencing the board's coord space.
 
